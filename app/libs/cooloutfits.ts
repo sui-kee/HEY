@@ -1,0 +1,56 @@
+
+export const cool_outfits = [
+
+    {
+        name:"",
+        source:"/cooloutfits/2.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/3.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/5.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/6.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/7.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/8.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/9.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/10.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/11.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/12.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/13.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/14.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/15.jpg"
+    },
+]

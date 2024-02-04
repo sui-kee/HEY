@@ -19,13 +19,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-[#04BFBF]`}>
-        <Image
-          src={"./icon.svg"}
-          width={100}
-          height={100}
-          className=" fixed top-2 left-2 w-[50px] h-[50px]"
-          alt="icon"
-        />
+        <div className="fixed top-2 left-2 flex justify-start items-center gap-2">
+          <Image
+            src={"./icon.svg"}
+            width={100}
+            height={100}
+            className="  w-[50px] h-[50px]"
+            alt="icon"
+          />
+          <h2 className=" uppercase text-4xl text-white font-bold">HEY</h2>
+        </div>
         <AntdRegistry>{children}</AntdRegistry>
       </body>
     </html>
