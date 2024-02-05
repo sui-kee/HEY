@@ -4,6 +4,7 @@ import { open_sans, roboto } from "@/app/font";
 import item4 from "./../../public/sh2.png";
 import item5 from "./../../public/sn3.png";
 import item6 from "./../../public/sn5.png";
+import Link from "next/link";
 
 export default function IntroImage() {
   const items = [item4, item5, item6];
@@ -33,9 +34,12 @@ export default function IntroImage() {
             />
           ))}
         </footer>
-        <button className=" bg-[#025159] text-[#04BFBF] hover:bg-black w-fit h-fit rounded-md p-2 bottom-0 right-[50] left-[50]">
+        <Link
+          href={"/home"}
+          className=" bg-[#025159] text-[#04BFBF] hover:bg-black w-fit h-fit rounded-md p-2 bottom-0 right-[50] left-[50]"
+        >
           Start shopping
-        </button>
+        </Link>
       </article>
       <Image
         priority
