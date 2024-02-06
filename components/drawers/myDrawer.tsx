@@ -46,8 +46,9 @@ function MyDrawer({
         open={open}
         placement={direction}
         width={" w-auto"}
-        children={children}
-      ></Drawer>
+      >
+        {children}
+      </Drawer>
     </>
   );
 }
