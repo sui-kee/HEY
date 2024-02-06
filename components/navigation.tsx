@@ -11,7 +11,7 @@ export default function Navigation() {
         <Link href={"/home/products"} className=" min-w-[140px]">
           products
         </Link>
-        <Link href={"/home"} className=" min-w-[140px]">
+        <Link href={"/home/carts"} className=" min-w-[140px]">
           carts
         </Link>
         <Link href={"/home"} className=" min-w-[140px]">

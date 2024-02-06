@@ -38,12 +38,12 @@ export default function ProductNavigation() {
           Hoodies
         </Link>
         <Link
-          href={"/home/products/trendings"}
+          href={"/home/products/event_outfits"}
           className={clsx(" py-3 rounded-t-lg px-2", {
-            ["bg-[#038C8C]"]: pathName === "/home/products/trendings",
+            ["bg-[#038C8C]"]: pathName === "/home/products/event_outfits",
           })}
         >
-          Trendings
+          Event outfits
         </Link>
       </ul>
     </nav>

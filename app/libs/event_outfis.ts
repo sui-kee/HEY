@@ -1,16 +1,16 @@
-const hoodies = [
-    "/hoodies/1.jpg",
-    "/hoodies/2.jpg",
-    "/hoodies/4.jpg",
-    "/hoodies/5.jpg",
-    "/hoodies/6.jpg",
+const eventOutfits = [
+    "/event_outfits/1.jpg",
+    "/event_outfits/2.jpg",
+    "/event_outfits/4.jpg",
+    "/event_outfits/5.jpg",
+    "/event_outfits/6.jpg",
   ];
-export const allHoodies = [
+export const allEventOutfits = [
     {
-      id:"hoody1",
+      id:"event_outfit1",
       name: "BM 1",
       madeIn: "Japan",
-      image: hoodies[0],
+      image: eventOutfits[0],
       price: 20000,
       left: 12,
       solded: 2,
@@ -20,10 +20,10 @@ export const allHoodies = [
       fuga.`,
     },
     {
-      id:"hoody2",  
+      id:"event_outfit2",  
       name: "BM 2",
         madeIn: "Japan",
-        image: hoodies[1],
+        image: eventOutfits[1],
         price: 20000,
         left: 12,
         solded: 2,
@@ -33,10 +33,10 @@ export const allHoodies = [
         fuga.`,
       },
       {
-        id:"hoody3",
+        id:"event_outfit3",
         name: "BM 3",
         madeIn: "Japan",
-        image: hoodies[2],
+        image: eventOutfits[2],
         price: 20000,
         left: 12,
         solded: 2,
@@ -46,10 +46,10 @@ export const allHoodies = [
         fuga.`,
       },
       {
-        id:"hoody4",
+        id:"event_outfit4",
         name: "BM 4",
         madeIn: "Japan",
-        image: hoodies[3],
+        image: eventOutfits[3],
         price: 20000,
         left: 12,
         solded: 2,
@@ -59,10 +59,10 @@ export const allHoodies = [
         fuga.`,
       },
       {
-        id:"hoody5",
+        id:"event_outfit5",
         name: "BM 5",
         madeIn: "Japan",
-        image: hoodies[4],
+        image: eventOutfits[4],
         price: 20000,
         left: 12,
         solded: 2,

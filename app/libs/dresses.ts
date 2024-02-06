@@ -7,6 +7,7 @@ const dresses = [
   ];
 export  const allDress = [
     {
+      id:"dress1",
       name: "BM 1",
       madeIn: "Japan",
       image: dresses[0],
@@ -19,7 +20,8 @@ export  const allDress = [
       fuga.`,
     },
     {
-        name: "BM 2",
+      id:"dress2",  
+      name: "BM 2",
         madeIn: "Japan",
         image: dresses[1],
         price: 20000,
@@ -31,6 +33,7 @@ export  const allDress = [
         fuga.`,
       },
       {
+        id:"dress3",
         name: "BM 3",
         madeIn: "Japan",
         image: dresses[2],
@@ -43,6 +46,7 @@ export  const allDress = [
         fuga.`,
       },
       {
+        id:"dress4",
         name: "BM 4",
         madeIn: "Japan",
         image: dresses[3],
@@ -55,6 +59,7 @@ export  const allDress = [
         fuga.`,
       },
       {
+        id:"dress5",
         name: "BM 5",
         madeIn: "Japan",
         image: dresses[4],
