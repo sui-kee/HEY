@@ -3,6 +3,7 @@ import { conforta } from "@/app/font";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import NavDropDown from "./navDropdown";
 
 export default function ProductNavigation() {
   const pathName = usePathname();
@@ -10,9 +11,9 @@ export default function ProductNavigation() {
 
   return (
     <nav
-      className={` ${conforta.className} w-full flex justify-start items-center text-lg text-white capitalize`}
+      className={` ${conforta.className} w-full flex justify-between gap-5 px-3 pt-3 items-center text-lg text-white capitalize`}
     >
-      <ul className=" w-full flex justify-start items-center gap-6 p-3 ">
+      <ul className=" w-fit flex justify-start items-center gap-6  ">
         <Link
           href={"/home/products/dresses"}
           className={clsx(" py-3 rounded-t-lg px-2", {
@@ -46,6 +47,7 @@ export default function ProductNavigation() {
           Event outfits
         </Link>
       </ul>
+      <NavDropDown />
     </nav>
   );
 }

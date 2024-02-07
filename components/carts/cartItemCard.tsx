@@ -3,11 +3,13 @@ import Image from "next/image";
 import MyButton from "../MyButton";
 import { poppin } from "@/app/font";
 import { Item, useCarts } from "@/app/store";
+import { itemDiscount } from "@/app/libs/cartFunctions";
 
 export default function CartItemCard({ item }: { item: Item }) {
   const reduceQuantity = useCarts((state) => state.reduceQuantity);
   const increaseQuantity = useCarts((state) => state.increaseQuantity);
   const removeItem = useCarts((state) => state.removeItem);
+  const { total, totalDiscount } = itemDiscount(item);
   return (
     <section className=" relative flex justify-end items-center flex-col min-h-[400px] overflow-hidden rounded-md">
       <span className=" opacity-60 text-black z-20 font-extrabold text-[50px] absolute top-[50px] right-[50px]">
@@ -44,8 +46,12 @@ export default function CartItemCard({ item }: { item: Item }) {
           <span>{item.quantity}</span>
         </div>
         <div className=" flex bg-white rounded-md p-2 justify-between items-center w-full">
+          <label>Discount :</label>
+          <span>{totalDiscount}</span>
+        </div>
+        <div className=" flex bg-white rounded-md p-2 justify-between items-center w-full">
           <label>Total price :</label>
-          <span>{item.price * item.quantity}</span>
+          <span>{total}</span>
         </div>
       </footer>
     </section>

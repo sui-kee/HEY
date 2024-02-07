@@ -6,6 +6,7 @@ import Image from "next/image";
 import MyButton from "../MyButton";
 import { poppin } from "@/app/font";
 import Link from "next/link";
+import { itemDiscount } from "@/app/libs/cartFunctions";
 
 export default function Bill() {
   const carts = useCarts((state) => state.carts);
@@ -47,6 +48,7 @@ export default function Bill() {
 
 export function BillItem({ item }: { item: Item }) {
   const removeItem = useCarts((state) => state.removeItem);
+  const { total, totalDiscount } = itemDiscount(item);
   return (
     <article
       className={` ${poppin.className} relative flex justify-between items-center w-full text-lg`}
@@ -59,7 +61,10 @@ export function BillItem({ item }: { item: Item }) {
         alt="billitem"
       />
       <span>X {item.quantity}</span>
-      <span>{item.price * item.quantity}MMK</span>
+      <span>
+        {total}
+        MMK
+      </span>
       <MyButton
         text="X"
         className=" bg-red-600 hover:bg-red-400"

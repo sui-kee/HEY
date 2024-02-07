@@ -21,12 +21,11 @@ function ItemDetailDrawer({ data }: { data: any }) {
 
   return (
     <>
-      <button
+      <MyButton
         onClick={showDrawer}
-        className=" bg-black text-white capitalize text-lg p-2 px-3 absolute right-50 top-50"
-      >
-        check
-      </button>
+        text="check"
+        className=" bg-black text-white capitalize rounded-br-lg absolute right-50 top-50"
+      />
       <Drawer title="Detail" onClose={onClose} open={open} width={" w-auto"}>
         <section className=" min-w-[50vw] h-full flex justify-center relative">
           <Image

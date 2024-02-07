@@ -16,7 +16,7 @@ export default function MyButton({
     <button
       onClick={onClick}
       className={clsx(
-        " p-2 px-3 rounded-md hover:bg-[#038C8C] bg-[#025159] text-white",
+        " p-1 px-2 sm:p-2 sm:px-3 rounded-md text-[12px] sm:text-sm md:text-lg hover:bg-[#038C8C] bg-[#025159] text-white",
         {
           [className]: className,
         }

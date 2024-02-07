@@ -2,7 +2,6 @@
 import { poppin } from "@/app/font";
 import MyButton from "@/components/MyButton";
 import { DatePicker, DatePickerProps, Input } from "antd";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
@@ -41,7 +40,7 @@ export default function Page() {
             >
               Card Number
             </label>
-            <Input placeholder="Enter your card number" />
+            <Input placeholder="Enter your card number" type="number" />
           </div>
           <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">

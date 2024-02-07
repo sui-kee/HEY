@@ -12,6 +12,8 @@ export type Item = {
   image: string,
   price: number,
   left:number,
+  total:number,
+  type:string,
   solded: number,
   discountPercent:number,
   description: number,
