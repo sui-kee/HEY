@@ -12,6 +12,7 @@ export default function WhatsNew() {
           src={Beach}
           placeholder="blur"
           alt="beach"
+          priority
         />
         <h2
           className={` ${corgetta.className} z-[2]  text-[80px] text-yellow-500`}
