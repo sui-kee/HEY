@@ -17,7 +17,7 @@ export default function ProductNavigation() {
         <Link
           href={"/home/products/dresses"}
           className={clsx(" py-3 rounded-t-lg px-2", {
-            ["bg-[#038C8C]"]: pathName === "/home/products/dresses",
+            ["bg-[#038C8C]"]: pathName.includes("dresses"),
           })}
         >
           Dresses
@@ -25,7 +25,7 @@ export default function ProductNavigation() {
         <Link
           href={"/home/products/sneakers"}
           className={clsx(" py-3 rounded-t-lg px-2", {
-            ["bg-[#038C8C]"]: pathName === "/home/products/sneakers",
+            ["bg-[#038C8C]"]: pathName.includes("sneakers"),
           })}
         >
           Sneakers
@@ -33,7 +33,10 @@ export default function ProductNavigation() {
         <Link
           href={"/home/products"}
           className={clsx(" py-3 rounded-t-lg px-2", {
-            ["bg-[#038C8C]"]: pathName === "/home/products",
+            ["bg-[#038C8C]"]:
+              pathName == "/home/products" ||
+              pathName == "/home/products/discounts" ||
+              pathName == "/home/products/largest_price",
           })}
         >
           Hoodies
@@ -41,7 +44,7 @@ export default function ProductNavigation() {
         <Link
           href={"/home/products/event_outfits"}
           className={clsx(" py-3 rounded-t-lg px-2", {
-            ["bg-[#038C8C]"]: pathName === "/home/products/event_outfits",
+            ["bg-[#038C8C]"]: pathName.includes("event_outfits"),
           })}
         >
           Event outfits
