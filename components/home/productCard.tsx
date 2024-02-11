@@ -34,10 +34,18 @@ export default function ProductCard({
             className={` rounded-lg z-[6] h-[200px] bg-center object-cover  `}
           />
           <span className=" z-[6] h-[50px] w-[50px] rounded-full bg-white text-[#025159] absolute top-2 right-2 p-1 text-center items-center text-2xl">
-            {index}
+            {index + 1}
           </span>
         </div>
-        <div className=" absolute left-3 top-3 bg-[#025159] rounded-lg  w-[300px] h-[310px] z-[4] "></div>
+        {[1, 2, 3, 4].map((num, i) => (
+          <BackgroundFrame
+            number={num}
+            index={i}
+            key={i}
+            changeImage={() => handleChangeImage(i)}
+          />
+        ))}
+        {/* <div className=" absolute left-3 top-3 bg-[#025159] rounded-lg  w-[300px] h-[310px] z-[4] "></div>
         <button
           onClick={() => handleChangeImage(0)}
           className=" absolute hover:h-[360px] left-3 top-3 bg-[#025159] rounded-lg  w-[50px] h-[350px] flex justify-end flex-col items-center z-[4] "
@@ -57,7 +65,7 @@ export default function ProductCard({
           className=" absolute hover:h-[360px] left-[100px] top-7 bg-[#038C8C] rounded-lg  w-[50px] h-[350px] flex justify-end flex-col items-center z-[2]"
         >
           <h4 className="text-white text-lg">3</h4>
-        </button>
+        </button> */}
       </article>
       <article className=" flex flex-col justify-start gap-2">
         <h2 className=" text-4xl text-[#038C8C] capitalize">
@@ -104,5 +112,42 @@ export default function ProductCard({
         </footer>
       </article>
     </section>
+  );
+}
+
+function BackgroundFrame({
+  changeImage,
+  index,
+  number,
+}: {
+  changeImage: () => void;
+  index: number;
+  number: number;
+}) {
+  const leftPaddingList = [`zero`, `one`, `two`, `three`];
+  const barPaddingLeft = [`[0px]`, `[50px]`, `[100px]`, `[150px]`];
+  const colors = [`bg-[#025159]`, `bg-[#8C452B]`, `bg-[#038C8C]`];
+  return (
+    <React.Fragment key={index}>
+      <div
+        className={`absolute left-${3 + 2 * index} top-${
+          3 + 2 * index
+        } bg-[#025159] rounded-lg ${colors[index]}  w-[300px] h-[310px] z-[${
+          4 - index
+        }]`}
+      ></div>
+      <button
+        onClick={() => changeImage()}
+        className={`absolute hover:h-[360px] left-${
+          barPaddingLeft[index]
+        } top-${3 + 2 * index} bg-[#025159] rounded-lg ${
+          colors[index]
+        }  w-[50px] h-[350px] flex justify-end flex-col items-center z-[${
+          4 - index
+        }]`}
+      >
+        <h4 className="text-white text-lg ">{number}</h4>
+      </button>
+    </React.Fragment>
   );
 }
