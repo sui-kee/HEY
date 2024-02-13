@@ -6,16 +6,35 @@ import MyButton from "../MyButton";
 import { poppin } from "@/app/font";
 import Link from "next/link";
 import BillItem from "./billItem";
-
+import { itemDiscount } from "@/app/libs/cartFunctions";
+const totalPriceFormat = (total: number) => {
+  const totalString = JSON.stringify(total).split("").reverse();
+  const stringLength = (totalString.length / 3) as any;
+  // let result = Array.from({ length: stringLength }, (_, index) => index + 1).map((num) => {
+  //   // Your logic with num goes here
+  //   console.log(num);
+  // });
+  const result = totalString.map((num, i) => {
+    if (parseInt(num) > 0 && (i + 1) % 3 === 0) {
+      return "," + num;
+    } else {
+      return num;
+    }
+  });
+  console.log(result.join(""), "is result unsorted");
+  console.log(result.reverse().join(""), "is result filtered");
+};
 export default function Bill() {
   const carts = useCarts((state) => state.carts);
   const allPrices = carts.map((cart) => {
-    return cart.price * cart.quantity;
+    const { total, totalDiscount } = itemDiscount(cart);
+    return total;
   });
-  const sum = allPrices.reduce(
+  const totalPrice = allPrices.reduce(
     (accumulator, currentValue) => accumulator + currentValue,
     0
   );
+  totalPriceFormat(123456789);
   return (
     carts.length > 0 && (
       <MyDrawer
@@ -34,7 +53,7 @@ export default function Bill() {
         >
           <div className=" flex justify-start gap-3 items-center">
             <span>Total :</span>
-            <span>{sum}MMK</span>
+            <span>{totalPrice}MMK</span>
           </div>
           <Link href={"/home/carts/payment"}>
             <MyButton text="payment" />

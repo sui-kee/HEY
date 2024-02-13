@@ -7,6 +7,7 @@ import { itemDiscount } from "@/app/libs/cartFunctions";
 export default function BillItem({ item }: { item: Item }) {
   const removeItem = useCarts((state) => state.removeItem);
   const { total, totalDiscount } = itemDiscount(item);
+
   return (
     <article
       className={` ${poppin.className} relative flex justify-between items-center w-full text-lg`}
