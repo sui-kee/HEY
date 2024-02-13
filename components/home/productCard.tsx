@@ -45,27 +45,6 @@ export default function ProductCard({
             changeImage={() => handleChangeImage(i)}
           />
         ))}
-        {/* <div className=" absolute left-3 top-3 bg-[#025159] rounded-lg  w-[300px] h-[310px] z-[4] "></div>
-        <button
-          onClick={() => handleChangeImage(0)}
-          className=" absolute hover:h-[360px] left-3 top-3 bg-[#025159] rounded-lg  w-[50px] h-[350px] flex justify-end flex-col items-center z-[4] "
-        >
-          <h4 className="text-white text-lg">1</h4>
-        </button>
-        <div className=" absolute left-5 top-5 bg-[#8C452B] rounded-lg  w-[300px] h-[310px] z-[3]"></div>
-        <button
-          onClick={() => handleChangeImage(1)}
-          className=" absolute hover:h-[360px] left-[50px] top-5 bg-[#8C452B] rounded-lg  w-[50px] h-[350px] flex justify-end flex-col items-center z-[3]"
-        >
-          <h4 className="text-white text-lg">2</h4>
-        </button>
-        <div className=" absolute left-7 top-7 bg-[#038C8C] rounded-lg  w-[300px] h-[310px] z-[2]"></div>
-        <button
-          onClick={() => handleChangeImage(2)}
-          className=" absolute hover:h-[360px] left-[100px] top-7 bg-[#038C8C] rounded-lg  w-[50px] h-[350px] flex justify-end flex-col items-center z-[2]"
-        >
-          <h4 className="text-white text-lg">3</h4>
-        </button> */}
       </article>
       <article className=" flex flex-col justify-start gap-2">
         <h2 className=" text-4xl text-[#038C8C] capitalize">
