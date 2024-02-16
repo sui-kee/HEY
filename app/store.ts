@@ -50,13 +50,6 @@ export const useCarts = create<Carts>((set)=>({
 const addNewItem = (carts:Item[],newItem:Item)=>{
   const alreadyExist = carts.find((cart)=>cart.id===newItem.id)
   if (alreadyExist){
-    //   return [...carts,{
-    //     ...alreadyExist,
-    //     quantity:alreadyExist.quantity+1<=alreadyExist.left?
-    //     alreadyExist.quantity+1:
-    //     alreadyExist.quantity
-    //   }
-    // ]
     return carts.map((cart)=>{
       if(newItem.id===cart.id && cart.quantity+1<=cart.left){
         return {...cart,quantity:cart.quantity+1}
