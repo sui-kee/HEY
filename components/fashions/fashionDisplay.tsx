@@ -1,8 +1,6 @@
 import { cool_outfits } from "@/app/libs/cooloutfits";
-import { Image } from "antd";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import React from "react";
-import { Heart } from "../icons/heart";
+import { FashionImage } from "./fashionImage";
 
 export default function FashionImgDisplay() {
   return (
@@ -28,19 +26,5 @@ export default function FashionImgDisplay() {
         ))}
       </article>
     </section>
-  );
-}
-
-export function FashionImage({ img, key }: { img: string; key: number }) {
-  return (
-    <div className="w-full rounded-lg overflow-hidden relative" key={key}>
-      <Image
-        preview={false}
-        src={img}
-        alt="Image 1"
-        className=" w-full rounded-lg"
-      />
-      <Heart />
-    </div>
   );
 }
