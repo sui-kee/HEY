@@ -8,21 +8,21 @@ import Link from "next/link";
 import BillItem from "./billItem";
 import { itemDiscount } from "@/app/libs/cartFunctions";
 const totalPriceFormat = (total: number) => {
-  const totalString = JSON.stringify(total).split("").reverse();
-  const stringLength = (totalString.length / 3) as any;
-  // let result = Array.from({ length: stringLength }, (_, index) => index + 1).map((num) => {
-  //   // Your logic with num goes here
-  //   console.log(num);
-  // });
-  const result = totalString.map((num, i) => {
-    if (parseInt(num) > 0 && (i + 1) % 3 === 0) {
-      return "," + num;
-    } else {
-      return num;
+  const totalString = JSON.stringify(total).split("").reverse().join("");
+  const initialStringLength = totalString.length / 3; //the initial divided value (it can be int or float for later use)
+  const stringLength = parseInt((totalString.length / 3) as any); //the length for breaking point (the time of comma should be added)
+  let result = []; //list for final result
+  for (let i = 0; i + 1 <= stringLength; i++) {
+    let breakingPoint = (i + 1) * 3;
+    let startingPoint = i * 3;
+    result.push(totalString.slice(startingPoint, breakingPoint));
+    //for the rest (if exist )
+    if (initialStringLength > stringLength && i + 1 === stringLength) {
+      result.push(totalString.slice(breakingPoint));
     }
-  });
-  console.log(result.join(""), "is result unsorted");
-  console.log(result.reverse().join(""), "is result filtered");
+  }
+
+  return result.join(",").split("").reverse().join("");
 };
 export default function Bill() {
   const carts = useCarts((state) => state.carts);
@@ -30,11 +30,13 @@ export default function Bill() {
     const { total, totalDiscount } = itemDiscount(cart);
     return total;
   });
-  const totalPrice = allPrices.reduce(
+  const totalPrices = allPrices.reduce(
     (accumulator, currentValue) => accumulator + currentValue,
     0
   );
-  totalPriceFormat(123456789);
+  console.log(totalPrices, "is total prices");
+
+  const totalPrice = totalPriceFormat(totalPrices);
   return (
     carts.length > 0 && (
       <MyDrawer

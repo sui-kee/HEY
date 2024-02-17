@@ -16,7 +16,7 @@ export default function Page() {
     <main
       className={` ${poppin.className}  flex justify-center items-center w-full h-[80vh]`}
     >
-      <div className="w-full max-w-lg bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="w-full max-w-lg bg-white shadow-lg rounded-lg overflow-hidden p-5">
         <div className="px-6 py-4">
           <h2 className="text-xl font-bold">Complete Your Purchase</h2>
           <p className="text-gray-600 text-sm mt-1">

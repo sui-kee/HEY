@@ -1,6 +1,5 @@
 
 export const cool_outfits = [
-
     {
         name:"",
         source:"/cooloutfits/2.jpg"
@@ -11,15 +10,19 @@ export const cool_outfits = [
     },
     {
         name:"",
+        source:"/cooloutfits/4.jpg"
+    },
+    {
+        name:"",
         source:"/cooloutfits/5.jpg"
     },
     {
         name:"",
-        source:"/cooloutfits/6.jpg"
+        source:"/cooloutfits/7.jpg"
     },
     {
         name:"",
-        source:"/cooloutfits/7.jpg"
+        source:"/cooloutfits/6.jpg"
     },
     {
         name:"",
@@ -52,5 +55,25 @@ export const cool_outfits = [
     {
         name:"",
         source:"/cooloutfits/15.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/16.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/17.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/18.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/19.jpg"
+    },
+    {
+        name:"",
+        source:"/cooloutfits/20.jpg"
     },
 ]

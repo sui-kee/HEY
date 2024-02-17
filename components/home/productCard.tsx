@@ -1,48 +1,60 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { conforta, protest_riot } from "@/app/font";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { NormalItem } from "@/types/itemTypes";
+import { BackgroundFrame } from "./backgroundFrame";
 
 export default function ProductCard({
   data,
   link,
+  type,
 }: {
   data: NormalItem[];
   link: "dresses" | "" | "sneakers";
+  type: string;
 }) {
-  const [displayImage, setDisplayImage] = useState<string | StaticImport>(
-    data[0].image
-  );
+  const [displayImage, setDisplayImage] = useState<string | StaticImport>("");
   const [index, setIndex] = useState(0);
   const handleChangeImage = (index: number) => {
     setDisplayImage(data[index].image);
     setIndex(index);
   };
+  useEffect(() => {
+    console.log(data, " from use effect");
+    console.log(`${type} length is ;`, data.length);
+
+    if (data.length > 0) {
+      setDisplayImage(data[0].image);
+    }
+  }, []);
+  if (data.length === 0) return <p>loading</p>;
   return (
     <section
       className={` ${protest_riot.className} flex flex-row justify-start gap-3`}
     >
       <article className="h-[450px] min-w-[400px] relative flex justify-start items-start">
         <div className=" relative bg-[#025159] rounded-lg  w-[300px] h-[310px] z-[5] ">
-          <Image
-            src={displayImage}
-            fill
-            alt="dress"
-            className={` rounded-lg z-[6] h-[200px] bg-center object-cover  `}
-          />
+          {displayImage && (
+            <Image
+              src={displayImage}
+              fill
+              alt="dress"
+              className={` rounded-lg z-[6] h-[200px] bg-center object-cover  `}
+            />
+          )}
           <span className=" z-[6] h-[50px] w-[50px] rounded-full bg-white text-[#025159] absolute top-2 right-2 p-1 text-center items-center text-2xl">
             {index + 1}
           </span>
         </div>
-        {[1, 2, 3, 4].map((num, i) => (
+        {data.map((_, num) => (
           <BackgroundFrame
-            number={num}
-            index={i}
-            key={i}
-            changeImage={() => handleChangeImage(i)}
+            number={num + 1}
+            index={num}
+            key={num}
+            changeImage={() => handleChangeImage(num)}
           />
         ))}
       </article>
@@ -66,22 +78,26 @@ export default function ProductCard({
               - {data[index].discountPercent}% off
             </h3>
           </div>
-          <div
-            className={` ${conforta.className} flex justify-start items-center gap-2`}
-          >
-            <h2 className=" text-xl font-serif uppercase text-white">Total</h2>
-            <h3 className=" text-green-400 text-xl font-extrabold bg-black p-1 rounded-md">
-              {data[index].total}
-            </h3>
-          </div>
-          <div
-            className={` ${conforta.className} flex justify-start items-center gap-2`}
-          >
-            <h2 className=" text-xl font-serif uppercase text-white">Left</h2>
-            <h3 className=" text-red-400 text-xl font-extrabold bg-black p-1 rounded-md">
-              {data[index].left}
-            </h3>
-          </div>
+          <span className=" w-full flex justify-start items-center gap-3">
+            <div
+              className={` ${conforta.className} flex justify-start items-center gap-2`}
+            >
+              <h2 className=" text-xl font-serif uppercase text-white">
+                Total
+              </h2>
+              <h3 className=" text-green-400 text-xl font-extrabold bg-black p-1 rounded-md">
+                {data[index].total}
+              </h3>
+            </div>
+            <div
+              className={` ${conforta.className} flex justify-start items-center gap-2`}
+            >
+              <h2 className=" text-xl font-serif uppercase text-white">Left</h2>
+              <h3 className=" text-red-400 text-xl font-extrabold bg-black p-1 rounded-md">
+                {data[index].left}
+              </h3>
+            </div>
+          </span>
           <Link
             href={`/home/products/${link}`}
             className=" p-2 px-3 rounded-md hover:bg-[#038C8C] bg-[#025159] text-white"
@@ -91,42 +107,5 @@ export default function ProductCard({
         </footer>
       </article>
     </section>
-  );
-}
-
-function BackgroundFrame({
-  changeImage,
-  index,
-  number,
-}: {
-  changeImage: () => void;
-  index: number;
-  number: number;
-}) {
-  const leftPaddingList = [`zero`, `one`, `two`, `three`];
-  const barPaddingLeft = [`[0px]`, `[50px]`, `[100px]`, `[150px]`];
-  const colors = [`bg-[#025159]`, `bg-[#8C452B]`, `bg-[#038C8C]`];
-  return (
-    <React.Fragment key={index}>
-      <div
-        className={`absolute left-${3 + 2 * index} top-${
-          3 + 2 * index
-        } bg-[#025159] rounded-lg ${colors[index]}  w-[300px] h-[310px] z-[${
-          4 - index
-        }]`}
-      ></div>
-      <button
-        onClick={() => changeImage()}
-        className={`absolute hover:h-[360px] left-${
-          barPaddingLeft[index]
-        } top-${3 + 2 * index} bg-[#025159] rounded-lg ${
-          colors[index]
-        }  w-[50px] h-[350px] flex justify-end flex-col items-center z-[${
-          4 - index
-        }]`}
-      >
-        <h4 className="text-white text-lg ">{number}</h4>
-      </button>
-    </React.Fragment>
   );
 }

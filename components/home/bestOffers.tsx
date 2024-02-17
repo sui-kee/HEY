@@ -1,26 +1,23 @@
-import { allSneakers } from "@/app/libs/sneakers";
+import { NormalItem } from "@/types/itemTypes";
 import ProductCard from "./productCard";
 import ProductHeader from "./productHeader";
-import { allHoodies } from "@/app/libs/hoodies";
-import { allDress } from "@/app/libs/dresses";
 
-export default function BestOffers() {
-  const discountedSneakers = allSneakers.filter(
-    (sneaker) => sneaker.discountPercent > 0
-  );
-  const discountedHoodies = allHoodies.filter(
-    (hoody) => hoody.discountPercent > 0
-  );
-  const discountedDresses = allDress.filter(
-    (dress) => dress.discountPercent > 0
-  );
-  const bestOffers = [discountedDresses, discountedHoodies, discountedSneakers];
-  const links = ["dresses", "", "sneakers"];
+export default async function BestOffers() {
+  const allProducts: NormalItem[] = await fetch(
+    "http://localhost:3001/products/discounts",
+    { next: { revalidate: 20 } }
+  )
+    .then((res) => res.json())
+    .catch((error) => console.log(error));
+  const d_dress = allProducts.filter((product) => product.type === "dress");
+  const d_sneaker = allProducts.filter((product) => product.type === "sneaker");
+  const d_hoody = allProducts.filter((product) => product.type === "hoody");
+
   return (
     <ProductHeader>
-      {bestOffers.map((item, i) => (
-        <ProductCard data={item} key={i} link={links[i] as any} />
-      ))}
+      <ProductCard data={d_dress} link={"dresses"} type="dress" />
+      <ProductCard data={d_sneaker} link={""} type="hoody" />
+      <ProductCard data={d_hoody} link={"sneakers"} type="sneaker" />
     </ProductHeader>
   );
 }

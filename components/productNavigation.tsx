@@ -11,7 +11,7 @@ export default function ProductNavigation() {
 
   return (
     <nav
-      className={` ${conforta.className} w-full flex justify-between gap-5 px-3 pt-3 items-center text-lg text-white capitalize`}
+      className={` ${conforta.className} w-full z-20 flex justify-between gap-5 px-3 pt-3 items-center text-lg text-white capitalize`}
     >
       <ul className=" w-fit flex justify-start items-center gap-6  ">
         <Link
