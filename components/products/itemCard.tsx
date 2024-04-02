@@ -12,7 +12,7 @@ export default function ItemCard({
   data: NormalItem;
 }) {
   return (
-    <article className="relative w-full min-h-[400px] rounded-lg z-[10] bg-[#038C8C] overflow-hidden">
+    <article className="relative w-full min-h-[430px] sm:min-h-[260px] lg:min-h-[400px] rounded-lg z-[10] bg-[#038C8C] overflow-hidden">
       <ItemDetailDrawer data={data} />
       <Image
         src={img}

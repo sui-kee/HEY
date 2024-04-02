@@ -33,9 +33,9 @@ export default function ProductCard({
   if (data.length === 0) return <p>loading</p>;
   return (
     <section
-      className={` ${protest_riot.className} flex flex-row justify-start gap-3`}
+      className={` ${protest_riot.className} flex flex-col gap-1 md:flex-row  justify-start md:gap-3`}
     >
-      <article className="h-[450px] min-w-[400px] relative flex justify-start items-start">
+      <article className="h-[450px] w-full md:min-w-[400px] relative flex justify-start items-start">
         <div className=" relative bg-[#025159] rounded-lg  w-[300px] h-[310px] z-[5] ">
           {displayImage && (
             <Image
@@ -58,12 +58,12 @@ export default function ProductCard({
           />
         ))}
       </article>
-      <article className=" flex flex-col justify-start gap-2">
+      <article className=" flex flex-col justify-start gap-2  ">
         <h2 className=" text-4xl text-[#038C8C] capitalize">
           {data[index].type}
         </h2>
         <h3 className="text-3xl text-white">{data[index].name}</h3>
-        <p className={` ${conforta.className} text-lg`}>
+        <p className={` ${conforta.className} text-sm w-fit sm:text-lg`}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis est
           magni, eligendi quae ea incidunt atque nisi quis nobis sapiente aut
           non cumque voluptate consequuntur neque voluptates quos ratione

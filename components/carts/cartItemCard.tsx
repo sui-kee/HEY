@@ -11,8 +11,8 @@ export default function CartItemCard({ item }: { item: Item }) {
   const removeItem = useCarts((state) => state.removeItem);
   const { total, totalDiscount } = itemDiscount(item);
   return (
-    <section className=" relative flex justify-end items-center flex-col min-h-[400px] overflow-hidden rounded-md">
-      <span className=" opacity-60 text-black z-20 font-extrabold text-[50px] absolute top-[50px] right-[50px]">
+    <section className=" relative flex justify-end items-center flex-col min-h-[430px] sm:min-h-[260px] lg:min-h-[400px] overflow-hidden rounded-md">
+      <span className=" opacity-60 text-black z-[10] font-extrabold  text-[30px] lg:text-[50px] absolute top-[50px] right-[50px]">
         {item.price}X{item.quantity}
       </span>
       <MyButton

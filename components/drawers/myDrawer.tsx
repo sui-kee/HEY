@@ -32,7 +32,7 @@ function MyDrawer({
       <button
         onClick={showDrawer}
         className={clsx(
-          " p-2 px-3 rounded-md bg-[#025159] hover:bg-[#038C8C] text-white text-lg",
+          " p-2 px-3 rounded-md bg-[#025159] hover:bg-[#038C8C] text-white text-sm sm:text-lg",
           {
             [className]: className,
           }

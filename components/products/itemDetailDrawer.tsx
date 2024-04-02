@@ -35,7 +35,7 @@ function ItemDetailDrawer({ data }: { data: any }) {
             alt="image"
             src={data.image}
           />
-          <article className=" flex flex-col justify-start items-start gap-3 text-lg w-[30vw] h-full p-2">
+          <article className=" flex flex-col justify-start items-start gap-3 text-sm sm:text-lg w-[30vw] h-full p-2">
             <h2 className={` ${corgetta.className} text-2xl`}>{data.name}</h2>
             <p className={` ${conforta.className} `}>{data.description}</p>
             <div className="flex justify-start gap-2 items-center">
