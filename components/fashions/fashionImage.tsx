@@ -1,9 +1,9 @@
 import { Image } from "antd";
 import { Heart } from "../icons/heart";
 
-export function FashionImage({ img, key }: { img: string; key: number }) {
+export function FashionImage({ img }: { img: string }) {
   return (
-    <div className="w-full rounded-lg overflow-hidden relative" key={key}>
+    <div className="w-full rounded-lg overflow-hidden relative">
       <Image
         preview={false}
         src={img}

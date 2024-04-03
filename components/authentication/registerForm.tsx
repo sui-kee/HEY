@@ -1,85 +1,101 @@
 "use client";
-import React from "react";
-import { Button, Checkbox, Form, type FormProps, Input } from "antd";
+import Image from "next/image";
+import React, { useState } from "react";
+import eye from "./eye.svg";
+import uneye from "./uneye.svg";
 
-type FieldType = {
-  username?: string;
-  email?: string;
-  password?: string;
-  confirm_password?: string;
-  remember?: string;
-};
-
-const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-  console.log("Success:", values);
-};
-
-const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
-
-const Register: React.FC = () => (
-  <Form
-    name="basic"
-    labelCol={{ span: 8 }}
-    wrapperCol={{ span: 16 }}
-    style={{
-      width: "100%",
-      display: "flex",
-      justifyContent: "center",
-      flexDirection: "column",
-      alignItems: "center",
-    }}
-    initialValues={{ remember: true }}
-    onFinish={onFinish}
-    onFinishFailed={onFinishFailed}
-    autoComplete="off"
-  >
-    <Form.Item<FieldType>
-      label="Username"
-      name="username"
-      rules={[{ required: true, message: "Please input your username!" }]}
-    >
-      <Input />
-    </Form.Item>
-
-    <Form.Item<FieldType>
-      label="Email"
-      name="email"
-      rules={[{ required: true, message: "Please input an email!" }]}
-    >
-      <Input type="email" />
-    </Form.Item>
-
-    <Form.Item<FieldType>
-      label="Password"
-      name="password"
-      rules={[{ required: true, message: "Please input your password!" }]}
-    >
-      <Input.Password />
-    </Form.Item>
-    <Form.Item<FieldType>
-      label="confirm password"
-      name="confirm_password"
-      rules={[{ required: true, message: "confirm your password!" }]}
-    >
-      <Input.Password />
-    </Form.Item>
-
-    <Form.Item<FieldType>
-      name="remember"
-      valuePropName="checked"
-      wrapperCol={{ offset: 8, span: 16 }}
-    >
-      <Checkbox>Remember me</Checkbox>
-    </Form.Item>
-
-    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-      <Button type="primary" htmlType="submit">
-        Submit
-      </Button>
-    </Form.Item>
-  </Form>
-);
+function Register() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
+  const [seePassword, setSeePassword] = useState(false);
+  const [seeConfirmPassword, setseeConfirmPassword] = useState(false);
+  return (
+    <form className=" flex justify-start items-center flex-col gap-5 p-6 min-w-[70vw] lg:min-w-[50vw] ">
+      <div className=" flex flex-row justify-start w-full items-center gap-3 ">
+        <label className=" w-[150px] uppercase text-white"> name</label>
+        <input
+          required
+          placeholder="your name"
+          className="  p-2 sm:p-4 rounded-md outline-none bg-white w-full"
+        />
+      </div>
+      <div className=" flex flex-row justify-start w-full items-center gap-3 ">
+        <label className=" w-[150px] uppercase text-white"> email</label>
+        <input
+          required
+          placeholder="your email"
+          className="  p-2 sm:p-4 rounded-md outline-none bg-white w-full"
+          type="email"
+        />
+      </div>
+      <div className=" relative flex flex-row justify-start w-full items-center gap-3 ">
+        <label className=" w-[150px] uppercase text-white"> password</label>
+        <input
+          required
+          placeholder="your password"
+          type={seePassword ? "text" : "password"}
+          className="  p-2 sm:p-4 rounded-md outline-none bg-white w-full"
+        />
+        {seePassword ? (
+          <Image
+            src={eye}
+            alt="eye"
+            width={30}
+            height={30}
+            onClick={() => setSeePassword(!seePassword)}
+            className=" absolute bottom-[50] right-2 top-[50] cursor-pointer"
+          />
+        ) : (
+          <Image
+            src={uneye}
+            alt="uneye"
+            width={30}
+            height={30}
+            onClick={() => setSeePassword(!seePassword)}
+            className=" absolute bottom-[50] right-2 top-[50] cursor-pointer"
+          />
+        )}
+      </div>
+      <div className=" relative flex flex-row justify-start w-full items-center gap-3 ">
+        <label className=" w-[150px] uppercase text-white">
+          confirm password
+        </label>
+        <input
+          required
+          placeholder="your password"
+          type={seeConfirmPassword ? "text" : "password"}
+          className="  p-2 sm:p-4 rounded-md outline-none bg-white w-full"
+        />
+        {seeConfirmPassword ? (
+          <Image
+            src={eye}
+            alt="eye"
+            width={30}
+            height={30}
+            onClick={() => setseeConfirmPassword(!seeConfirmPassword)}
+            className=" absolute bottom-[50] right-2 top-[50] cursor-pointer"
+          />
+        ) : (
+          <Image
+            src={uneye}
+            alt="uneye"
+            width={30}
+            height={30}
+            onClick={() => setseeConfirmPassword(!seeConfirmPassword)}
+            className=" absolute bottom-[50] right-2 top-[50] cursor-pointer"
+          />
+        )}
+      </div>
+      <button
+        type="submit"
+        className=" bg-black w-full hover:rounded-md text-white uppercase font-bold space-x-3 p-5 hover:bg-white hover:text-black"
+      >
+        REGISTER
+      </button>
+    </form>
+  );
+}
 
 export default Register;
