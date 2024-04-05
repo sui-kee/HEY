@@ -1,61 +1,124 @@
-import React from "react";
-import { Button, Checkbox, Form, type FormProps, Input } from "antd";
+"use client";
+import Image from "next/image";
+import React, { useState } from "react";
+import eye from "./eye.svg";
+import Cookies from "js-cookie";
+import uneye from "./uneye.svg";
+import { fjalla } from "@/app/font";
+import Link from "next/link";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { auth } from "@/app/firebase-config";
 
-type FieldType = {
-  username?: string;
-  password?: string;
-  remember?: string;
-};
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [seePassword, setSeePassword] = useState(false);
+  const [logging, setLogging] = useState(false);
+  const router = useRouter();
+  const lognIn = async (email: string, password: string) => {
+    setLogging(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          // toastSuccess();
+          // document.cookie = `loginWithFireBase=true;`;
+          Cookies.set("firebase-auth", "true");
+          router.push("/");
+        })
+        .catch(() => alert("error login"));
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
 
-const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-  console.log("Success:", values);
-};
-
-const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
-  console.log("Failed:", errorInfo);
-};
-
-const Login: React.FC = () => (
-  <Form
-    name="basic"
-    labelCol={{ span: 8 }}
-    wrapperCol={{ span: 16 }}
-    style={{ maxWidth: 600 }}
-    initialValues={{ remember: true }}
-    onFinish={onFinish}
-    onFinishFailed={onFinishFailed}
-    autoComplete="off"
-  >
-    <Form.Item<FieldType>
-      label="Username"
-      name="username"
-      rules={[{ required: true, message: "Please input your username!" }]}
+  const onSubmit = async () => {
+    await lognIn(email, password);
+  };
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit();
+      }}
+      className=" relative flex justify-start items-center flex-col gap-5 p-6 min-w-[70vw] lg:min-w-[50vw] "
     >
-      <Input />
-    </Form.Item>
+      <div className=" flex justify-center items-center gap-3">
+        <h3 className={` ${fjalla.className} text-4xl uppercase`}>
+          login and grap yours now
+        </h3>
+        <Image
+          src={"/shoppingwhite.svg"}
+          width={70}
+          height={70}
+          className=""
+          alt="shopping"
+        />
+      </div>
 
-    <Form.Item<FieldType>
-      label="Password"
-      name="password"
-      rules={[{ required: true, message: "Please input your password!" }]}
-    >
-      <Input.Password />
-    </Form.Item>
+      <div className="flex flex-row justify-start w-full items-center gap-3">
+        <label className="w-[150px] uppercase text-white">Email</label>
+        <input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          placeholder="example@gmail.com"
+          className="p-2 sm:p-4 rounded-md outline-none bg-white w-full"
+          type="email"
+        />
+      </div>
 
-    <Form.Item<FieldType>
-      name="remember"
-      valuePropName="checked"
-      wrapperCol={{ offset: 8, span: 16 }}
-    >
-      <Checkbox>Remember me</Checkbox>
-    </Form.Item>
+      <div className="relative flex flex-row justify-start w-full items-center gap-3">
+        <label className="w-[150px] uppercase text-white">Password</label>
+        <input
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="at least 6 characters"
+          type={seePassword ? "text" : "password"}
+          pattern=".{6,}" // At least 8 characters
+          title="Password must be at least 6 characters long"
+          className="p-2 sm:p-4 rounded-md outline-none bg-white w-full"
+        />
+        {seePassword ? (
+          <Image
+            src={eye}
+            alt="eye"
+            width={30}
+            height={30}
+            onClick={() => setSeePassword(!seePassword)}
+            className="absolute bottom-[50] right-2 top-[50] cursor-pointer"
+          />
+        ) : (
+          <Image
+            src={uneye}
+            alt="uneye"
+            width={30}
+            height={30}
+            onClick={() => setSeePassword(!seePassword)}
+            className="absolute bottom-[50] right-2 top-[50] cursor-pointer"
+          />
+        )}
+      </div>
 
-    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-      <Button type="primary" htmlType="submit">
-        Submit
-      </Button>
-    </Form.Item>
-  </Form>
-);
+      <button
+        type="submit"
+        className=" bg-black w-full hover:rounded-md text-white uppercase font-bold space-x-3 p-5 hover:bg-white hover:text-black"
+      >
+        login
+      </button>
+      <h4 className=" text-sm italic text-white">
+        haven't account yet?
+        <Link
+          href={"authentication/register"}
+          className=" text-blue-800 text-lg uppercase font-bold"
+          style={{ fontStyle: "normal" }}
+        >
+          signup
+        </Link>
+      </h4>
+    </form>
+  );
+}
 
 export default Login;
