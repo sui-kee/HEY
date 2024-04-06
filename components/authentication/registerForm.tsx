@@ -30,15 +30,17 @@ function Register() {
         (res) => {
           updateProfile(res.user, {
             displayName: userName,
-            photoURL: "https://github.com/shadcn.png",
+            photoURL:
+              "https://firebasestorage.googleapis.com/v0/b/heyshop-9658b.appspot.com/o/hat.png?alt=media&token=da385753-74c2-4b06-8e86-1758009346a4",
           }).catch((error) => alert(error.message));
           Cookies.set("firebase-auth", "true");
         }
       );
-      await axios.post("https://isong-rose.vercel.app/api/user", {
-        username: userName,
-        email: email,
-      });
+      alert("it works!!");
+      // await axios.post("https://isong-rose.vercel.app/api/user", {
+      //   username: userName,
+      //   email: email,
+      // });
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +52,7 @@ function Register() {
       .then(() => {
         alert("registering complete");
         document.cookie = `loginWithFireBase=false;`;
-        router.push("/songs");
+        router.push("/");
       })
       .catch((error) => console.log(error));
   };

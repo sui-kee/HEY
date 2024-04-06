@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import Image from "next/image";
 import Link from "next/link";
+import AppNameBar from "@/components/appNameBar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,12 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-[#04BFBF]`}>
-        <Link
-          href={"/"}
-          className="fixed cursor-pointer z-30 top-2 left-2 flex justify-start items-center gap-2"
-        >
-          <h2 className=" uppercase text-4xl text-white font-bold">HEY</h2>
-        </Link>
+        <AppNameBar />
         <AntdRegistry>{children}</AntdRegistry>
       </body>
     </html>

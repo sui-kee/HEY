@@ -26,7 +26,10 @@ function Login() {
           Cookies.set("firebase-auth", "true");
           router.push("/");
         })
-        .catch(() => alert("error login"));
+        .catch((error: any) => {
+          alert("error login");
+          console.log(error);
+        });
     } catch (error: any) {
       console.log(error.message);
     }
