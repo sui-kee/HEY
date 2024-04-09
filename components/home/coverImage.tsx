@@ -19,9 +19,14 @@ export default function WhatsNew() {
         >
           {`It's summer time`}
         </h2>
-        <h3 className={` ${poppin.className} z-[2] text-4xl text-black`}>
-          Celebrate with our products
-        </h3>
+        <div
+          className={` ${poppin.className} z-[2] text-4xl text-black flex gap-3 items-center `}
+        >
+          <h4>Celebrate with</h4>
+          <h4 className=" text-white rounded-md bg-blue-600 p-2">
+            our product
+          </h4>
+        </div>
       </article>
     </section>
   );

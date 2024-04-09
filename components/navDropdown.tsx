@@ -42,7 +42,7 @@ function NavDropDown() {
         onClick={(e) => e.preventDefault()}
         className=" flex gap-1 justify-start items-center"
       >
-        <span>sort by</span>
+        <span className=" hidden md:block">sort by</span>
         <Image
           src={"/sort.svg"}
           width={100}
