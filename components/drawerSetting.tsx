@@ -3,18 +3,22 @@ import React, { useState } from "react";
 import { Drawer } from "antd";
 import Image from "next/image";
 
-function getCookies(): { [key: string]: string } {
-  const cookies: { [key: string]: string } = {};
-  document.cookie.split(";").forEach((cookie) => {
-    const [name, value] = cookie.trim().split("=");
-    cookies[name] = value;
-  });
-  return cookies;
-}
+// function getCookies(): { [key: string]: string } {
+//   const cookies: { [key: string]: string } = {};
+//   if (typeof document !== undefined) {
+//     document.cookie.split(";").forEach((cookie) => {
+//       const [name, value] = cookie.trim().split("=");
+//       cookies[name] = value;
+//     });
+//     return cookies;
+//   } else {
+//     return {};
+//   }
+// }
 
 const SettingDrawer: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const { firebase_auth } = getCookies();
+  // const { firebase_auth } = getCookies();
   const showDrawer = () => {
     setOpen(true);
   };
@@ -22,7 +26,7 @@ const SettingDrawer: React.FC = () => {
   const onClose = () => {
     setOpen(false);
   };
-  console.log("cookies: ", typeof getCookies());
+  // console.log("cookies: ", typeof getCookies());
 
   return (
     <>
