@@ -17,7 +17,7 @@ export default function FashionImgLarge({
         alt="fashion image"
         height={800}
         width={400}
-        className="h-[90vh]  rounded-md"
+        className="h-[90vh]  rounded-md object-cover"
       />
     </div>
   );
