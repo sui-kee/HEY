@@ -2,9 +2,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
--First clone this -https://github.com/sui-kee/hey_api- repo.
--And clone this HEY repo in your manchine. 
--run hey_api for api by using (node server.js or npm start) command ( mongo db may not connect due to location restriction :) )
+- First clone this -https://github.com/sui-kee/hey_api- repo.
+- And clone this HEY repo in your manchine. 
+- run hey_api for api by using (node server.js or npm start) command ( mongo db may not connect due to location restriction :) )
 - run hey project by using ( npm run dev or npm run preview).
 - do not forget to install packages( npm i )
 ```bash
