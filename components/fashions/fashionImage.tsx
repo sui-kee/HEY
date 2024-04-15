@@ -7,11 +7,9 @@ import FashionImgLarge from "./fashionImgLarge";
 export function FashionImage({ img }: { img: string }) {
   const [viewImg, setViewImg] = useState(false);
   return (
-    <div
-      className=" w-full rounded-lg relative cursor-pointer"
-      onClick={() => setViewImg(!viewImg)}
-    >
+    <div className=" w-full rounded-lg relative cursor-pointer">
       <Image
+        onClick={() => setViewImg(!viewImg)}
         height={600}
         width={600}
         src={img}

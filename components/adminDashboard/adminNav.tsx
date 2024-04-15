@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Badge,
   BellIcon,
   HomeIcon,
   LineChartIcon,
@@ -14,6 +13,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import clsx from "clsx";
+import { Badge } from "../ui/badge";
 
 export default function V0adminNav() {
   const path = usePathname();
@@ -73,7 +73,7 @@ export default function V0adminNav() {
             >
               <ShoppingCartIcon className="h-4 w-4" />
               Orders
-              <Badge className="ml-auto flex h-6 w-6 shrink-0 text-black items-center justify-center rounded-full">
+              <Badge className="ml-auto flex h-6 w-6 shrink-0  items-center justify-center rounded-full">
                 6
               </Badge>
             </Link>

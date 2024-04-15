@@ -9,6 +9,16 @@ import Link from "next/link";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "@/app/firebase-config";
+import axios from "axios";
+
+const getUser = async (email: string) => {
+  const response = await axios.get(`http://localhost:3001/user?email=${email}`);
+  if (response.status === 201) {
+    return response.data;
+  } else {
+    return alert("errror in fetching user:)");
+  }
+};
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -24,7 +34,7 @@ function Login() {
           // toastSuccess();
           // document.cookie = `loginWithFireBase=true;`;
           Cookies.set("firebase-auth", "true");
-          router.push("/");
+          router.push("/home");
         })
         .catch((error: any) => {
           alert("error login");
@@ -36,7 +46,16 @@ function Login() {
   };
 
   const onSubmit = async () => {
-    await lognIn(email, password);
+    try {
+      await lognIn(email, password).then(async () => {
+        const user = await getUser(email);
+        console.log("user from login:", user);
+
+        Cookies.set("userToken", user[0].id);
+      });
+    } catch (error: any) {
+      return alert(error.message);
+    }
   };
   return (
     <form

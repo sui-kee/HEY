@@ -19,7 +19,7 @@ export default function BillItem({ item }: { item: Item }) {
         src={item.image}
         alt="billitem"
       />
-      <span>X {item.quantity}</span>
+      <span>X {item.quantity}=</span>
       <span>
         {total}
         MMK

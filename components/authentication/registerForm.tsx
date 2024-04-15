@@ -20,6 +20,31 @@ function Register() {
   const [registering, setRegistering] = useState(false);
   const router = useRouter();
 
+  const registerOnDb = async (
+    name: string,
+    password: string,
+    email: string,
+    role: "ADMIN" | "BASIC"
+  ) => {
+    const response = await axios.post("http://localhost:3001/user", {
+      name: name,
+      email: email,
+      password: password,
+      role: role,
+    });
+    if (response.status === 201) {
+      alert("register success !!");
+      console.log(" user that just created: ", response.data);
+
+      Cookies.set("userToken", response.data.id);
+      return router.push("/home");
+    } else {
+      console.log(response.config, "error config");
+
+      return alert(response.statusText);
+    }
+  };
+
   const registerUser = async (
     userName: string,
     email: string,
@@ -36,11 +61,7 @@ function Register() {
           Cookies.set("firebase-auth", "true");
         }
       );
-      alert("it works!!");
-      // await axios.post("https://isong-rose.vercel.app/api/user", {
-      //   username: userName,
-      //   email: email,
-      // });
+      await registerOnDb(userName, password, email, "BASIC");
     } catch (error) {
       console.log(error);
     }
@@ -48,6 +69,9 @@ function Register() {
 
   const onSubmit = async () => {
     setRegistering(true);
+    if (password != confirmPassword) {
+      return alert("password are not matched");
+    }
     await registerUser(name, email, password)
       .then(() => {
         alert("registering complete");

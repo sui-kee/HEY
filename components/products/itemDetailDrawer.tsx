@@ -27,15 +27,15 @@ function ItemDetailDrawer({ data }: { data: any }) {
         className=" bg-black text-white capitalize rounded-br-lg absolute right-50 top-50"
       />
       <Drawer title="Detail" onClose={onClose} open={open} width={" w-auto"}>
-        <section className=" min-w-[50vw] h-full flex justify-center relative">
+        <section className=" min-w-[50vw] h-full flex flex-col sm:flex-row justify-center relative">
           <Image
-            className="w-[450px] rounded-lg"
+            className="w-[400px] sm:w-[450px] rounded-lg"
             width={500}
             height={500}
             alt="image"
             src={data.image}
           />
-          <article className=" flex flex-col justify-start items-start gap-3 text-sm sm:text-lg w-[30vw] h-full p-2">
+          <article className="border w-full flex flex-col justify-start items-start gap-3 text-sm sm:text-lg sm:w-[30vw] h-full p-2">
             <h2 className={` ${corgetta.className} text-2xl`}>{data.name}</h2>
             <p className={` ${conforta.className} `}>{data.description}</p>
             <div className="flex justify-start gap-2 items-center">
