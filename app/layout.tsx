@@ -5,6 +5,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import Image from "next/image";
 import Link from "next/link";
 import AppNameBar from "@/components/appNameBar";
+import UserProvider from "@/components/warpers/userProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-[#04BFBF]`}>
         <AppNameBar />
-        <AntdRegistry>{children}</AntdRegistry>
+        <AntdRegistry>
+          <UserProvider>{children}</UserProvider>
+        </AntdRegistry>
       </body>
     </html>
   );

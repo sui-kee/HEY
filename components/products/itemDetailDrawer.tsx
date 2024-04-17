@@ -1,15 +1,19 @@
 "use client";
-import React, { useState } from "react";
-import { Divider, Drawer } from "antd";
+import React, { useContext, useState } from "react";
+import { Drawer } from "antd";
 import Image from "next/image";
 import MyButton from "../MyButton";
 import { conforta, corgetta, poppin } from "@/app/font";
 import { useCarts } from "@/app/store";
+import { UserContext } from "../warpers/userProvider";
+import { useRouter } from "next/navigation";
 
 function ItemDetailDrawer({ data }: { data: any }) {
   const [open, setOpen] = useState(false);
+  const user: any = useContext(UserContext);
   const addItemToCart = useCarts((state) => state.addItem);
   const allCarts = useCarts((state) => state.carts);
+  const router = useRouter();
   const showDrawer = () => {
     setOpen(true);
   };
@@ -18,6 +22,7 @@ function ItemDetailDrawer({ data }: { data: any }) {
   const onClose = () => {
     setOpen(false);
   };
+  // console.log("user in detail: ", user[0]);
 
   return (
     <>
@@ -61,11 +66,19 @@ function ItemDetailDrawer({ data }: { data: any }) {
               </h2>
             </div>
           </article>
-          <MyButton
-            onClick={() => addItemToCart({ ...data, quantity: 1 })}
-            className=" absolute bottom-2 right-2 "
-            text="Add to cart"
-          />
+          {user && user[0]?.role != "ADMIN" ? (
+            <MyButton
+              onClick={() => addItemToCart({ ...data, quantity: 1 })}
+              className=" absolute bottom-2 right-2 "
+              text="add to cart"
+            />
+          ) : (
+            <MyButton
+              className=" absolute bottom-2 right-2 "
+              text="Edit"
+              onClick={() => router.push("/admin/product/" + data.id)}
+            />
+          )}
         </section>
       </Drawer>
     </>
