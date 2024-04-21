@@ -12,7 +12,9 @@ import { auth } from "@/app/firebase-config";
 import axios from "axios";
 
 const getUser = async (email: string) => {
-  const response = await axios.get(`http://localhost:3001/user?email=${email}`);
+  const response = await axios.get(
+    `http://localhost:3001/users/getUserByEmail?email=${email}`
+  );
   if (response.status === 201) {
     return response.data;
   } else {

@@ -5,7 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 
 const getAllProducts = async () => {
-  const response = await fetch(`http://localhost:3001/allProducts`);
+  const response = await fetch(`http://localhost:3001/products/allProducts`);
   if (response.status === 201) {
     return response.json();
   } else {

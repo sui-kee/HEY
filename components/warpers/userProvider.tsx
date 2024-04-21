@@ -5,7 +5,9 @@ import React, { createContext, useEffect, useState } from "react";
 
 export const UserContext = createContext(null);
 const getUser = async (userToken: string) => {
-  const user = await axios.get("http://localhost:3001/user/id?id=" + userToken);
+  const user = await axios.get(
+    "http://localhost:3001/users/getUserById?id=" + userToken
+  );
   if (user.status === 201) {
     return user.data;
   } else {
@@ -19,7 +21,7 @@ export default function UserProvider({
   children: React.ReactNode;
 }) {
   const [currentUser, setCurrentUser] = useState<any>(null);
-  console.log("current user from user provider:", typeof currentUser);
+  console.log("current user from user provider:", currentUser);
 
   useEffect(() => {
     const get_user = async () => {

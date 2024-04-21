@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import UserBox from "@/components/adminDashboard/userBox";
 
 const getAllUsers = async () => {
-  const response = await axios.get("http://localhost:3001/users");
+  const response = await axios.get("http://localhost:3001/users/getAllUsers");
   if (response.status === 201) {
     return response.data;
   } else {

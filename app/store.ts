@@ -23,6 +23,7 @@ type Carts = {
   carts:Item[]|[];
   addItem:(newItem:Item)=>void;
   removeItem:(itemId:string)=>void;
+  removeAllItems:()=>void;
   reduceQuantity:(itemId:string)=>void;
   increaseQuantity:(itemId:string)=>void;
 }
@@ -45,6 +46,7 @@ export const useCarts = create<Carts>((set)=>({
     }
   })})),
   addItem:(newItem:Item)=>set((state)=>({carts:addNewItem(state.carts,newItem)})),
+  removeAllItems:()=>set((state)=>({carts:[]}))
 }))
 
 const addNewItem = (carts:Item[],newItem:Item)=>{

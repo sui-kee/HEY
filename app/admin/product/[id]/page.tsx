@@ -19,7 +19,7 @@ import Image from "next/image";
 
 const getProduct = async (productId: string) => {
   const response = await axios.get(
-    "http://localhost:3001/product/id?id=" + productId
+    "http://localhost:3001/products/" + productId
   );
   if (response.status === 201) {
     return response.data;

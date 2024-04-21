@@ -1,20 +1,72 @@
 "use client";
 import { poppin } from "@/app/font";
+import { itemDiscount } from "@/app/libs/cartFunctions";
+import { useCarts } from "@/app/store";
 import MyButton from "@/components/MyButton";
+import { UserContext } from "@/components/warpers/userProvider";
 import { DatePicker, DatePickerProps, Input } from "antd";
+import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useContext, useEffect } from "react";
+
+const createNewOrder = async (
+  newOrder: {
+    total: number;
+    status: string;
+    customer: any;
+    products: any;
+  },
+  clearCartFun: () => void
+) => {
+  const response = await axios.post(
+    "http://localhost:3001/orders/newOrder",
+    newOrder
+  );
+  if (response.status === 201) {
+    clearCartFun();
+    return alert(" ordered successfully....");
+  } else {
+    return alert(" something went wrong in ordering!!!");
+  }
+};
 
 export default function Page() {
+  const carts = useCarts((state) => state.carts);
+  const removeCarts = useCarts((state) => state.removeAllItems);
+  const user = useContext(UserContext);
+  console.log("user for customer:", user);
+
   const router = useRouter();
+  const allPrices = carts.map((cart) => {
+    const { total, totalDiscount } = itemDiscount(cart);
+    return total;
+  });
+  const totalPrices = allPrices.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
   const onDateChange: DatePickerProps["onChange"] = (date, dateString) => {
     console.log(date, dateString);
   };
   const onMonthChange: DatePickerProps["onChange"] = (date, dateString) => {
     console.log(date, dateString);
   };
+  // const order = async () => {
+  //   console.log(
+  // {
+  //   total: totalPrices,
+  //   status: "shipped",
+  //   customer: user?.[0],
+  //   products: carts,
+  // },
+  //     "is order!!!!!!!!!!"
+  //   );
+
+  //   //await createNewOrder({total:totalPrices,status:"shipped",customer:user,products:carts})
+  // };
   return (
     <main
-      className={` ${poppin.className}  flex justify-center items-center w-full h-[80vh]`}
+      className={` ${poppin.className}  flex justify-center flex-col gap-4 items-center w-full h-[80vh]`}
     >
       <div className="w-full max-w-lg bg-white shadow-lg rounded-lg overflow-hidden p-5">
         <div className="px-6 py-4">
@@ -81,6 +133,22 @@ export default function Page() {
           />
         </footer>
       </div>
+      <button
+        onClick={() =>
+          createNewOrder(
+            {
+              total: totalPrices,
+              status: "shipped",
+              customer: user?.[0],
+              products: carts,
+            },
+            removeCarts
+          )
+        }
+        className=" hover:text-black text-xl font-extrabold space-x-3 uppercase text-white"
+      >
+        Pay in other way? just order first
+      </button>
     </main>
   );
 }

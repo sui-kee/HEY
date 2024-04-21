@@ -20,13 +20,16 @@ export default function AppNameBar() {
     >
       <h2 className=" uppercase text-4xl text-white font-bold">HEY</h2>
       {user?.photoURL && (
-        <Image
-          src={user?.photoURL}
-          alt="profile"
-          width={100}
-          height={100}
-          className=" rounded-full w-[40px] h-[40px]"
-        />
+        <div className=" flex gap-2 items-center">
+          <Image
+            src={user?.photoURL}
+            alt="profile"
+            width={100}
+            height={100}
+            className=" rounded-full w-[40px] h-[40px]"
+          />
+          <h3>{user?.displayName}</h3>
+        </div>
       )}
     </Link>
   );

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const getUser = async (id: string) => {
   try {
-    const response = await fetch(`http://localhost:3001/user/id?id=`+id);
+    const response = await fetch(`http://localhost:3001/users/getUserById?id=`+id);
 
     if (!response.ok) {
       throw new Error('Error fetching user');
@@ -18,7 +18,7 @@ const getUser = async (id: string) => {
 };
 
 export default async function middleware(req: NextRequest) {
-  // console.log("user id from cookie: ",req.cookies.get("userToken"));
+  console.log("user id from cookie: ",req.cookies.get("userToken"));
   
   const user = await getUser(req.cookies.get("userToken")?.value as any)
   // console.log("user from middleware:",user);

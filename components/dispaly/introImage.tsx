@@ -10,7 +10,9 @@ import { useEffect, useState } from "react";
 
 const getUser = async (id: string) => {
   try {
-    const response = await fetch(`http://localhost:3001/user/id?id=` + id);
+    const response = await fetch(
+      `http://localhost:3001/users/getUserById?id=` + id
+    );
 
     if (!response.ok) {
       throw new Error("Error fetching user");
