@@ -1,3 +1,4 @@
+import { ProductItem } from '@/types/productTypes';
 import { create } from 'zustand'
 
 type IsUpType = {
@@ -20,8 +21,8 @@ export type Item = {
 }
 
 type Carts = {
-  carts:Item[]|[];
-  addItem:(newItem:Item)=>void;
+  carts:ProductItem[]|[];
+  addItem:(newItem:ProductItem)=>void;
   removeItem:(itemId:string)=>void;
   removeAllItems:()=>void;
   reduceQuantity:(itemId:string)=>void;
@@ -32,29 +33,29 @@ export const useCarts = create<Carts>((set)=>({
   carts:[],
   removeItem:(itemId:string)=>set((state)=>({carts:state.carts.filter((item)=>item.id!=itemId)})),
   reduceQuantity:(itemId:string)=>set((state)=>({carts:state.carts.map((cart)=>{
-    if(itemId===cart.id && cart.quantity>1){
-      return {...cart,quantity:cart.quantity-1}
+    if(itemId===cart.id && cart.quantity!>1){
+      return {...cart,quantity:cart.quantity!-1}
     }else{
       return cart
     }
   })})),
   increaseQuantity:(itemId:string)=>set((state)=>({carts:state.carts.map((cart)=>{
-    if(itemId===cart.id && cart.quantity+1<=cart.left){
-      return {...cart,quantity:cart.quantity+1}
+    if(itemId===cart.id && cart.quantity!+1<=cart.left){
+      return {...cart,quantity:cart.quantity!+1}
     }else{
       return cart
     }
   })})),
-  addItem:(newItem:Item)=>set((state)=>({carts:addNewItem(state.carts,newItem)})),
+  addItem:(newItem:ProductItem)=>set((state)=>({carts:addNewItem(state.carts,newItem)})),
   removeAllItems:()=>set((state)=>({carts:[]}))
 }))
 
-const addNewItem = (carts:Item[],newItem:Item)=>{
+const addNewItem = (carts:ProductItem[],newItem:ProductItem)=>{
   const alreadyExist = carts.find((cart)=>cart.id===newItem.id)
   if (alreadyExist){
     return carts.map((cart)=>{
-      if(newItem.id===cart.id && cart.quantity+1<=cart.left){
-        return {...cart,quantity:cart.quantity+1}
+      if(newItem.id===cart.id && cart.quantity!+1<=cart.left){
+        return {...cart,quantity:cart.quantity!+1}
       }else{
         return cart
       }

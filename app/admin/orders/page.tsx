@@ -1,5 +1,5 @@
-import AdminOrderBox from "@/components/adminDashboard/adminOrderBox";
-import { OrdersList } from "@/components/component/orders";
+// import AdminOrderBox from "@/components/adminDashboard/adminOrderBox";
+import { OrdersList } from "@/components/v0components/orders";
 
 export default function Orders() {
   return (

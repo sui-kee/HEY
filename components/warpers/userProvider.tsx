@@ -5,6 +5,8 @@ import React, { createContext, useEffect, useState } from "react";
 
 export const UserContext = createContext(null);
 const getUser = async (userToken: string) => {
+  console.log("user token:", userToken);
+
   const user = await axios.get(
     "http://localhost:3001/users/getUserById?id=" + userToken
   );

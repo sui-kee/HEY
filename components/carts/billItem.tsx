@@ -3,8 +3,9 @@ import { Item, useCarts } from "@/app/store";
 import Image from "next/image";
 import MyButton from "../MyButton";
 import { itemDiscount } from "@/app/libs/cartFunctions";
+import { ProductItem } from "@/types/productTypes";
 
-export default function BillItem({ item }: { item: Item }) {
+export default function BillItem({ item }: { item: ProductItem }) {
   const removeItem = useCarts((state) => state.removeItem);
   const { total, totalDiscount } = itemDiscount(item);
 

@@ -1,0 +1,16 @@
+export type ProductItem= {
+    _id?:any,
+    name:string,
+    type:string,
+    madeIn:string,
+    image:string,
+    price:number,
+    left:number,
+    total:number,
+    solded:number,
+    discountPercent:number,
+    description:string,
+    id:string,
+    __v?:number,
+    quantity?:number,
+}

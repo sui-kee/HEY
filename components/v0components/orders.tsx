@@ -42,6 +42,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import axios from "axios";
 import { convertDateTime } from "@/app/libs/dateTimeFilter";
+import Link from "next/link";
 
 const getOrders = async () => {
   const response = await axios.get("http://localhost:3001/orders");
@@ -140,7 +141,11 @@ export async function OrdersList() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View order</DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Link href={"/admin/orders/" + order.id}>
+                            View order
+                          </Link>
+                        </DropdownMenuItem>
                         <DropdownMenuItem>Customer details</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>

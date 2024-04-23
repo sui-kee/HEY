@@ -1,4 +1,3 @@
-"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,31 +11,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Package2Icon, SearchIcon } from "@/components/adminDashboard/v0Icons";
 import Image from "next/image";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import UserBox from "@/components/adminDashboard/userBox";
+import { User } from "@/types/userTypes";
 
 const getAllUsers = async () => {
-  const response = await axios.get("http://localhost:3001/users/getAllUsers");
-  if (response.status === 201) {
-    return response.data;
+  const response = await fetch("http://localhost:3001/users");
+  if (response.ok) {
+    return await response.json();
   } else {
-    alert("error in fetching user");
+    console.log("error in fetching usersss");
     // console.log(response.data);
   }
 };
 
-export default function Page() {
-  const [allUsers, setAllUsers] = useState<any>(null);
-  useEffect(() => {
-    const users = async () => {
-      const all_users = await getAllUsers();
-      //   console.log(" all users: ", all_users);
+export default async function Page() {
+  const users = await getAllUsers();
+  // console.log("allusers from admin user:", users);
 
-      setAllUsers(all_users);
-    };
-    users();
-  }, []);
   return (
     <div className=" flex flex-col gap-2 w-full h-full">
       <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">
@@ -84,9 +75,9 @@ export default function Page() {
         </DropdownMenu>
       </header>
       <section className=" gap-8 p-2 flex justify-start items-center ">
-        {allUsers &&
-          allUsers.map(
-            (user: any, index: number) =>
+        {users &&
+          users.map(
+            (user: User, index: number) =>
               user.name != "admin" && <UserBox key={index} user={user} />
           )}
       </section>

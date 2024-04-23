@@ -32,6 +32,8 @@ const createNewOrder = async (
 
 export default function Page() {
   const carts = useCarts((state) => state.carts);
+  console.log("carts////", carts);
+
   const removeCarts = useCarts((state) => state.removeAllItems);
   const user = useContext(UserContext);
   console.log("user for customer:", user);
@@ -51,19 +53,15 @@ export default function Page() {
   const onMonthChange: DatePickerProps["onChange"] = (date, dateString) => {
     console.log(date, dateString);
   };
-  // const order = async () => {
-  //   console.log(
-  // {
-  //   total: totalPrices,
-  //   status: "shipped",
-  //   customer: user?.[0],
-  //   products: carts,
-  // },
-  //     "is order!!!!!!!!!!"
-  //   );
-
-  //   //await createNewOrder({total:totalPrices,status:"shipped",customer:user,products:carts})
-  // };
+  console.log(
+    {
+      total: totalPrices,
+      status: "shipped",
+      customer: user?.[0],
+      products: carts,
+    },
+    "is order!!!!!!!!!!"
+  );
   return (
     <main
       className={` ${poppin.className}  flex justify-center flex-col gap-4 items-center w-full h-[80vh]`}
