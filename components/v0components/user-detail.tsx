@@ -17,6 +17,7 @@ To read more about using these font, please visit the Next.js documentation:
 - App Directory: https://nextjs.org/docs/app/building-your-application/optimizing/fonts
 - Pages Directory: https://nextjs.org/docs/pages/building-your-application/optimizing/fonts
 **/
+import { convertDateTime } from "@/app/libs/dateTimeFilter";
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import {
   TableHead,
@@ -26,9 +27,25 @@ import {
   TableBody,
   Table,
 } from "@/components/ui/table";
+import { Order } from "@/types/orderTypes";
 import { User } from "@/types/userTypes";
+import axios from "axios";
 
-export function UserDetail({ user }: { user: User }) {
+const getOrderByUserId = async (id: string) => {
+  const response = await axios.get(
+    `http://localhost:3001/orders/byUserId/${id}`
+  );
+  if (response.status === 201) {
+    return response.data;
+  } else {
+    return console.log("error in fetcing order for user...");
+  }
+};
+
+export async function UserDetail({ user }: { user: User }) {
+  const orders = await getOrderByUserId(user.id);
+  console.log("orders by user: ", orders, "user :", user.id);
+
   return (
     <div className="container mx-auto px-4 py-8 md:px-6 lg:px-8 bg-white h-full">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -69,12 +86,14 @@ export function UserDetail({ user }: { user: User }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>1234</TableCell>
-                <TableCell>2023-04-01</TableCell>
-                <TableCell>$99.99</TableCell>
-                <TableCell>Completed</TableCell>
-              </TableRow>
+              {orders.map((order: Order, index: number) => (
+                <TableRow key={index}>
+                  <TableCell>1234</TableCell>
+                  <TableCell>{convertDateTime(order.orderTime)}</TableCell>
+                  <TableCell>${order.total}</TableCell>
+                  <TableCell>{order.status}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>

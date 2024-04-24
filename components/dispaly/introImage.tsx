@@ -34,7 +34,7 @@ export default function IntroImage() {
   useEffect(() => {
     const myUser = async () => {
       const user = await getUser(Cookies.get("userToken") as string);
-      setUser(user[0]);
+      setUser(user);
     };
     myUser();
   }, []);

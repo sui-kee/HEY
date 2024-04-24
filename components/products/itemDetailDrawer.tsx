@@ -66,17 +66,17 @@ function ItemDetailDrawer({ data }: { data: any }) {
               </h2>
             </div>
           </article>
-          {user && user[0]?.role != "ADMIN" ? (
-            <MyButton
-              onClick={() => addItemToCart({ ...data, quantity: 1 })}
-              className=" absolute bottom-2 right-2 "
-              text="add to cart"
-            />
-          ) : (
+          {user && user?.role === "ADMIN" ? (
             <MyButton
               className=" absolute bottom-2 right-2 "
               text="Edit"
               onClick={() => router.push("/admin/product/" + data.id)}
+            />
+          ) : (
+            <MyButton
+              onClick={() => addItemToCart({ ...data, quantity: 1 })}
+              className=" absolute bottom-2 right-2 "
+              text="add to cart"
             />
           )}
         </section>

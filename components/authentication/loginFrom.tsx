@@ -13,7 +13,7 @@ import axios from "axios";
 
 const getUser = async (email: string) => {
   const response = await axios.get(
-    `http://localhost:3001/users/getUserByEmail?email=${email}`
+    `http://localhost:3001/users/email/${email}`
   );
   if (response.status === 201) {
     return response.data;
@@ -35,8 +35,8 @@ function Login() {
         .then(() => {
           // toastSuccess();
           // document.cookie = `loginWithFireBase=true;`;
-          Cookies.set("firebase-auth", "true");
-          router.push("/home");
+          // Cookies.set("firebase-auth", "true");
+          // router.push("/");
         })
         .catch((error: any) => {
           alert("error login");
@@ -53,7 +53,14 @@ function Login() {
         const user = await getUser(email);
         console.log("user from login:", user);
 
-        Cookies.set("userToken", user[0].id);
+        if (user) {
+          Cookies.set("userToken", user.id);
+          Cookies.set("firebase-auth", "true");
+          return router.push("/");
+        } else {
+          Cookies.set("firebase-auth", "false");
+          return alert("user not found please try again");
+        }
       });
     } catch (error: any) {
       return alert(error.message);

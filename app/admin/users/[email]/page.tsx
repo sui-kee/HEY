@@ -2,7 +2,9 @@ import { UserDetail } from "@/components/v0components/user-detail";
 
 const getUser = async (email: string) => {
   const response = await fetch(`http://localhost:3001/users/email/${email}`);
+
   if (response.ok) {
+    //console.log("log from response: ", await response.json());
     return await response.json();
   } else {
     return console.log("error in userdetail  :", await response.json());

@@ -4,6 +4,7 @@ import { itemDiscount } from "@/app/libs/cartFunctions";
 import { useCarts } from "@/app/store";
 import MyButton from "@/components/MyButton";
 import { UserContext } from "@/components/warpers/userProvider";
+import { User } from "@/types/userTypes";
 import { DatePicker, DatePickerProps, Input } from "antd";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -15,6 +16,7 @@ const createNewOrder = async (
     status: string;
     customer: any;
     products: any;
+    customerId: string;
   },
   clearCartFun: () => void
 ) => {
@@ -30,12 +32,16 @@ const createNewOrder = async (
   }
 };
 
+type UserTypes = {
+  user: null | User;
+};
+
 export default function Page() {
   const carts = useCarts((state) => state.carts);
   console.log("carts////", carts);
 
   const removeCarts = useCarts((state) => state.removeAllItems);
-  const user = useContext(UserContext);
+  const user: any = useContext(UserContext);
   console.log("user for customer:", user);
 
   const router = useRouter();
@@ -137,8 +143,9 @@ export default function Page() {
             {
               total: totalPrices,
               status: "shipped",
-              customer: user?.[0],
+              customer: user,
               products: carts,
+              customerId: user.id,
             },
             removeCarts
           )

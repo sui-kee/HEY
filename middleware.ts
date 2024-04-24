@@ -28,7 +28,7 @@ export default async function middleware(req: NextRequest) {
         
         return NextResponse.rewrite(new URL('/authentication', req.url))
       }
-    if (req.nextUrl.pathname.startsWith("/admin") && user[0].role !== "ADMIN"){
+    if (req.nextUrl.pathname.startsWith("/admin") && user.role !== "ADMIN"){
         return NextResponse.rewrite(new URL("/denied",req.url))
     }
   //   if (req.nextUrl.pathname.startsWith("/home") && user[0].role === "ADMIN"){

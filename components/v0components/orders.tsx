@@ -58,7 +58,7 @@ export async function OrdersList() {
   console.log("orders are :", orders);
 
   return (
-    <div className="flex flex-col w-full h-full bg-white">
+    <div className="flex flex-col overflow-auto w-full h-full bg-white">
       <div className="border shadow-sm overflow-hidden">
         <div className="grid grid-cols-3 items-center border-b px-4 py-2 text-sm md:grid-cols-6 lg:grid-cols-6 xl:grid-cols-6 dark:border-gray-800">
           <div className="flex items-center gap-2 text-base font-medium md:col-span-2 lg:col-span-2 xl:col-span-2">
@@ -124,7 +124,7 @@ export async function OrdersList() {
                   </TableCell>
                   <TableCell>{order.customer.name}</TableCell>
                   <TableCell className="hidden  md:table-cell">
-                    {convertDateTime(order.orderTime)}{" "}
+                    {convertDateTime(order.orderTime)}
                   </TableCell>
                   <TableCell className="hidden  md:table-cell ">
                     ${order.total}
