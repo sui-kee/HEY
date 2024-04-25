@@ -23,6 +23,23 @@ function ItemDetailDrawer({ data }: { data: any }) {
     setOpen(false);
   };
   // console.log("user in detail: ", user[0]);
+  const the_button = () => {
+    return user ? (
+      user?.role === "ADMIN" ? (
+        <MyButton
+          className=" absolute bottom-2 right-2 "
+          text="Edit"
+          onClick={() => router.push("/admin/product/" + data.id)}
+        />
+      ) : (
+        <MyButton
+          onClick={() => addItemToCart({ ...data, quantity: 1 })}
+          className=" absolute bottom-2 right-2 "
+          text="add to cart"
+        />
+      )
+    ) : null;
+  };
 
   return (
     <>
@@ -66,19 +83,7 @@ function ItemDetailDrawer({ data }: { data: any }) {
               </h2>
             </div>
           </article>
-          {user && user?.role === "ADMIN" ? (
-            <MyButton
-              className=" absolute bottom-2 right-2 "
-              text="Edit"
-              onClick={() => router.push("/admin/product/" + data.id)}
-            />
-          ) : (
-            <MyButton
-              onClick={() => addItemToCart({ ...data, quantity: 1 })}
-              className=" absolute bottom-2 right-2 "
-              text="add to cart"
-            />
-          )}
+          {the_button()}
         </section>
       </Drawer>
     </>

@@ -8,7 +8,7 @@ const getUser = async (userToken: string) => {
   console.log("user token:", userToken);
 
   const user = await axios.get(
-    "http://localhost:3001/users/getUserById?id=" + userToken
+    `http://localhost:3001/users/getUserById?id=${userToken}`
   );
   if (user.status === 201) {
     return user.data;
@@ -31,7 +31,7 @@ export default function UserProvider({
       setCurrentUser(user);
     };
     get_user();
-  }, []);
+  }, [currentUser]);
   return (
     <UserContext.Provider value={currentUser}>{children}</UserContext.Provider>
   );

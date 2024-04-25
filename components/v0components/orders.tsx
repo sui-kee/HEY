@@ -43,6 +43,7 @@ import {
 import axios from "axios";
 import { convertDateTime } from "@/app/libs/dateTimeFilter";
 import Link from "next/link";
+import { Order } from "@/types/orderTypes";
 
 const getOrders = async () => {
   const response = await axios.get("http://localhost:3001/orders");
@@ -54,12 +55,12 @@ const getOrders = async () => {
 };
 
 export async function OrdersList() {
-  const orders = await getOrders();
+  const orders: Order[] = await getOrders();
   console.log("orders are :", orders);
 
   return (
     <div className="flex flex-col overflow-auto w-full h-full bg-white">
-      <div className="border shadow-sm overflow-hidden">
+      <div className="border shadow-sm overflow-auto">
         <div className="grid grid-cols-3 items-center border-b px-4 py-2 text-sm md:grid-cols-6 lg:grid-cols-6 xl:grid-cols-6 dark:border-gray-800">
           <div className="flex items-center gap-2 text-base font-medium md:col-span-2 lg:col-span-2 xl:col-span-2">
             <span>Viewing</span>
@@ -117,10 +118,10 @@ export async function OrdersList() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {orders.map((order: any, index: number) => (
+              {orders.map((order: Order, index: number) => (
                 <TableRow key={index}>
                   <TableCell className="hidden  sm:table-cell font-medium">
-                    #3210
+                    #{order.orderCode}
                   </TableCell>
                   <TableCell>{order.customer.name}</TableCell>
                   <TableCell className="hidden  md:table-cell">

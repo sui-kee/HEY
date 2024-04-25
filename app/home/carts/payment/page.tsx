@@ -1,6 +1,7 @@
 "use client";
 import { poppin } from "@/app/font";
 import { itemDiscount } from "@/app/libs/cartFunctions";
+import { generateShortUUID } from "@/app/libs/globalsFuns";
 import { useCarts } from "@/app/store";
 import MyButton from "@/components/MyButton";
 import { UserContext } from "@/components/warpers/userProvider";
@@ -17,6 +18,7 @@ const createNewOrder = async (
     customer: any;
     products: any;
     customerId: string;
+    orderCode: string;
   },
   clearCartFun: () => void
 ) => {
@@ -59,15 +61,15 @@ export default function Page() {
   const onMonthChange: DatePickerProps["onChange"] = (date, dateString) => {
     console.log(date, dateString);
   };
-  console.log(
-    {
-      total: totalPrices,
-      status: "shipped",
-      customer: user?.[0],
-      products: carts,
-    },
-    "is order!!!!!!!!!!"
-  );
+  // console.log(
+  //   {
+  //     total: totalPrices,
+  //     status: "shipped",
+  //     customer: user?.[0],
+  //     products: carts,
+  //   },
+  //   "is order!!!!!!!!!!"
+  // );
   return (
     <main
       className={` ${poppin.className}  flex justify-center flex-col gap-4 items-center w-full h-[80vh]`}
@@ -146,6 +148,7 @@ export default function Page() {
               customer: user,
               products: carts,
               customerId: user.id,
+              orderCode: generateShortUUID(),
             },
             removeCarts
           )
