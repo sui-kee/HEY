@@ -30,6 +30,7 @@ import {
 import { Order } from "@/types/orderTypes";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import DeleteOrder from "./orderFuns";
 
 export function OrderDetail({ order }: { order: Order }) {
   const totalPrice = calculateTotal(order.products);
@@ -37,6 +38,7 @@ export function OrderDetail({ order }: { order: Order }) {
     <>
       <Card>
         <CardHeader>
+          <DeleteOrder orderId={order.id} />
           <CardTitle>Order #3102</CardTitle>
           <CardDescription></CardDescription>
         </CardHeader>
@@ -107,7 +109,7 @@ export function OrderDetail({ order }: { order: Order }) {
         <CardContent>
           <div className="grid gap-4 md:gap-8 md:grid-cols-2 lg:grid-cols-3">
             {order.products.map((product, index) => (
-              <div>
+              <div key={index}>
                 <img
                   alt="Product image"
                   className="aspect-video object-cover rounded-md overflow-hidden"
