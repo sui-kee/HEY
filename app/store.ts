@@ -1,4 +1,5 @@
 import { ProductItem } from '@/types/productTypes';
+import { User } from '@/types/userTypes';
 import { create } from 'zustand'
 
 type IsUpType = {
@@ -48,6 +49,16 @@ export const useCarts = create<Carts>((set)=>({
   })})),
   addItem:(newItem:ProductItem)=>set((state)=>({carts:addNewItem(state.carts,newItem)})),
   removeAllItems:()=>set((state)=>({carts:[]}))
+}))
+
+type reduxUser = {
+  user:undefined|User,
+  setUser:(user:any)=>void
+}
+
+export const useUser = create<reduxUser>((set)=>({
+  user:undefined,
+  setUser:(user:any)=>set(()=>({user:user}))
 }))
 
 const addNewItem = (carts:ProductItem[],newItem:ProductItem)=>{

@@ -10,6 +10,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "@/app/firebase-config";
 import axios from "axios";
+import { useUser } from "@/app/store";
 
 const getUser = async (email: string) => {
   const response = await axios.get(
@@ -26,6 +27,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [seePassword, setSeePassword] = useState(false);
+  const setUser = useUser((state) => state.setUser);
   const [logging, setLogging] = useState(false);
   const router = useRouter();
   const lognIn = async (email: string, password: string) => {
@@ -56,7 +58,8 @@ function Login() {
         if (user) {
           Cookies.set("userToken", user.id);
           Cookies.set("firebase-auth", "true");
-          return router.push("/");
+          setUser(user);
+          return router.refresh();
         } else {
           Cookies.set("firebase-auth", "false");
           return alert("user not found please try again");

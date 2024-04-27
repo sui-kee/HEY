@@ -24,14 +24,16 @@ export default function UserProvider({
 }) {
   const [currentUser, setCurrentUser] = useState<any>(null);
   console.log("current user from user provider:", currentUser);
-
+  const [userToken, setUserToken] = useState(Cookie.get("userToken") as string);
   useEffect(() => {
     const get_user = async () => {
-      const user = await getUser(Cookie.get("userToken") as string);
+      const user = await getUser(userToken);
       setCurrentUser(user);
     };
     get_user();
-  }, [currentUser]);
+  }, []);
+  console.log("current user: ", currentUser);
+
   return (
     <UserContext.Provider value={currentUser}>{children}</UserContext.Provider>
   );

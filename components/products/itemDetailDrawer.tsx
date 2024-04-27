@@ -4,13 +4,13 @@ import { Drawer } from "antd";
 import Image from "next/image";
 import MyButton from "../MyButton";
 import { conforta, corgetta, poppin } from "@/app/font";
-import { useCarts } from "@/app/store";
+import { useCarts, useUser } from "@/app/store";
 import { UserContext } from "../warpers/userProvider";
 import { useRouter } from "next/navigation";
 
 function ItemDetailDrawer({ data }: { data: any }) {
   const [open, setOpen] = useState(false);
-  const user: any = useContext(UserContext);
+  const user = useUser((state) => state.user);
   const addItemToCart = useCarts((state) => state.addItem);
   const allCarts = useCarts((state) => state.carts);
   const router = useRouter();
@@ -18,6 +18,7 @@ function ItemDetailDrawer({ data }: { data: any }) {
     setOpen(true);
   };
   console.log("all carts:", allCarts);
+  console.log("user from redux: ", user);
 
   const onClose = () => {
     setOpen(false);

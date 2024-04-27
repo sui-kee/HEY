@@ -16,6 +16,8 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { uploadFileToFirebase } from "@/app/libs/uploadToFirebase";
+import { ProductItem } from "@/types/productTypes";
 
 const getProduct = async (productId: string) => {
   const response = await axios.get(
@@ -31,18 +33,120 @@ const getProduct = async (productId: string) => {
 };
 
 export default function EditProduct({ params }: { params: { id: string } }) {
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<ProductItem | null>(null);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [madeIn, setMadeIn] = useState("");
+  const [price, setPrice] = useState("");
+  const [left, setLeft] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [image, setImage] = useState<any>("");
+  const [chooseImage, setChooseImage] = useState<File | undefined>(undefined);
+  const [total, setTotal] = useState<number | undefined>(undefined);
+  const [solded, setSolded] = useState<any>(undefined);
+  const [imageUrl, setImageUrl] = useState("");
   const router = useRouter();
   const productId = params.id;
-  console.log("product edit data: ", product);
+
+  const handleSubmitToDb = async () => {
+    const editProduct = await axios.put(
+      `http://localhost:3001/products/edit/${productId}`,
+      {
+        name: name,
+        type: product?.type,
+        madeIn: madeIn,
+        image: imageUrl ? imageUrl : product?.image,
+        price: price,
+        left: left,
+        total: total,
+        solded: solded,
+        discountPercent: discount,
+        description: description,
+      }
+    );
+    if (editProduct.status === 200) {
+      return alert("success editing product");
+    } else {
+      return alert("error on editing products...");
+    }
+  };
+  const handleSaveChanges = async () => {
+    if (chooseImage) {
+      console.log("firebase mode");
+
+      return await uploadFileToFirebase(chooseImage, "products", setImageUrl);
+    }
+    console.log("normal mode ");
+
+    return await handleSubmitToDb();
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value, files } = e.target;
+    switch (id) {
+      case "name":
+        setName(value);
+        break;
+      case "description":
+        setDescription(value);
+        break;
+      case "made-in":
+        setMadeIn(value);
+        break;
+      case "price":
+        setPrice(value);
+        break;
+      case "left":
+        setLeft(value);
+        break;
+      case "discount":
+        setDiscount(parseInt(value));
+        break;
+      case "total":
+        setTotal(parseInt(value));
+        break;
+      case "solded":
+        setSolded(parseInt(value));
+        break;
+      // case "image":
+      //   setChooseImage(files?.[0] as File);
+      //   break;
+      default:
+        break;
+    }
+  };
+  const handleChooseImage = (image: File) => {
+    console.log("when choose new image: ", image);
+
+    setChooseImage(image as File);
+  };
 
   useEffect(() => {
     const get_product = async () => {
       const product = await getProduct(productId);
-      setProduct(product[0]);
+      setProduct(product);
+      setName(product.name || "");
+      setDescription(product.description || "");
+      setMadeIn(product.madeIn || "");
+      setPrice(product.price || "");
+      setLeft(product.left || "");
+      setSolded(product.solded || 0);
+      setTotal(product.total || 0);
+      setDiscount(product.discountPercent || 0);
+      setImage(product.image || "");
     };
     get_product();
-  }, []);
+  }, [productId]);
+  console.log("my product in admin: ", product, "and name is: ", name);
+  useEffect(() => {
+    const updateProduct = async () => {
+      await handleSubmitToDb();
+    };
+    if (imageUrl) {
+      updateProduct();
+    }
+  }, [imageUrl]);
+
   return (
     product && (
       <Card>
@@ -52,106 +156,103 @@ export default function EditProduct({ params }: { params: { id: string } }) {
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="flex flex-col gap-2">
-            <label
-              className="text-sm shrink-0 font-semibold peer-disabled:cursor-not-allowed"
-              htmlFor="name"
-            >
-              NAME
-            </label>
+            <label htmlFor="name">NAME</label>
             <Input
               id="name"
               placeholder="Name"
-              value={product && product.name}
+              value={name}
+              onChange={handleInputChange}
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label
-              className="text-sm shrink-0 font-semibold peer-disabled:cursor-not-allowed"
-              htmlFor="description"
-            >
-              DESCRIPTION
-            </label>
+            <label htmlFor="description">DESCRIPTION</label>
             <textarea
-              className="resize-y min-h-[100px] border rounded-md"
               id="description"
               placeholder="Enter description"
-              value={product && product.description}
+              value={description}
+              onChange={(e: any) => handleInputChange(e)}
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label
-              className="text-sm shrink-0 font-semibold peer-disabled:cursor-not-allowed"
-              htmlFor="made-in"
-            >
-              MADE IN
-            </label>
+            <label htmlFor="made-in">MADE IN</label>
             <Input
               id="made-in"
               placeholder="Enter country"
-              value={product && product.madeIn}
+              value={madeIn}
+              onChange={handleInputChange}
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label
-              className="text-sm shrink-0 font-semibold peer-disabled:cursor-not-allowed"
-              htmlFor="price"
-            >
-              PRICE
-            </label>
+            <label htmlFor="price">PRICE</label>
             <Input
               id="price"
               placeholder="Enter price"
               type="number"
-              value={product && product.price}
+              value={price}
+              onChange={handleInputChange}
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label
-              className="text-sm shrink-0 font-semibold peer-disabled:cursor-not-allowed"
-              htmlFor="left"
-            >
-              LEFT
-            </label>
+            <label htmlFor="left">LEFT</label>
             <Input
               id="left"
               type="number"
               placeholder="Enter quantity"
-              value={product && product.left}
+              value={left}
+              onChange={handleInputChange}
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label
-              className="text-sm shrink-0 font-semibold peer-disabled:cursor-not-allowed"
-              htmlFor="discount"
-            >
-              DISCOUNT
-            </label>
+            <label htmlFor="discount">DISCOUNT</label>
             <Input
               id="discount"
               placeholder="Enter discount"
               type="number"
-              value={product && product.discountPercent}
+              value={discount as number}
+              onChange={handleInputChange}
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label
-              className="text-sm shrink-0 font-semibold peer-disabled:cursor-not-allowed"
-              htmlFor="image"
-            >
-              IMAGE
-            </label>
+            <label htmlFor="discount">TOTAL</label>
+            <Input
+              id="total"
+              placeholder="Enter discount"
+              type="number"
+              value={total}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="discount">SOLDED</label>
+            <Input
+              id="solded"
+              placeholder="Enter discount"
+              type="number"
+              value={solded}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="image">IMAGE</label>
             <Image
               width={200}
               height={200}
               className="w-[200px] h-[200px] object-cover rounded-md"
               alt="image"
-              src={product && product.image}
+              src={chooseImage ? URL.createObjectURL(chooseImage) : image}
             />
-            <Input id="image" type="file" />
+            <Input
+              id="image"
+              accept="image/*"
+              type="file"
+              onChange={(e) => handleChooseImage(e.target.files?.[0] as File)}
+            />
           </div>
         </CardContent>
         <CardFooter className=" gap-7">
-          <Button size="lg">Save Changes</Button>
+          <Button size="lg" onClick={() => handleSaveChanges()}>
+            Save Changes
+          </Button>
           <Button size="lg" onClick={() => router.back()}>
             Back
           </Button>

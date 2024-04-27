@@ -1,4 +1,5 @@
 import V0adminNav from "@/components/adminDashboard/adminNav";
+import UserProvider from "@/components/warpers/userProvider";
 import React from "react";
 
 export default function RootLayout({
@@ -9,7 +10,9 @@ export default function RootLayout({
   return (
     <div className={` w-full mt-16 flex h-[87vh] overflow-auto  `}>
       <V0adminNav />
-      <div className=" w-[80vw] overflow-auto flex flex-col">{children}</div>
+      <div className=" w-[80vw] overflow-auto flex flex-col">
+        <UserProvider>{children}</UserProvider>
+      </div>
     </div>
   );
 }
