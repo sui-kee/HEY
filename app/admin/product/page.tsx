@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Package2Icon, SearchIcon } from "@/components/adminDashboard/v0Icons";
 import AdminProducts from "@/components/adminDashboard/adminProducts";
 import MyAdminSettingDropdown from "@/components/adminDashboard/adminDropdown";
+import UserProvider from "@/components/warpers/userProvider";
 
 export default async function Home() {
   return (
@@ -26,7 +27,9 @@ export default async function Home() {
         </div>
         <MyAdminSettingDropdown />
       </header>
-      <AdminProducts />
+      <UserProvider>
+        <AdminProducts />
+      </UserProvider>
     </div>
   );
 }

@@ -13,77 +13,251 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { uploadFileToFirebase } from "@/app/libs/uploadToFirebase";
+import { ProductTypeDropdown } from "@/components/component/product-type-dropdown";
 
-export default function EditProduct() {
+export default function CreateProduct() {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [madeIn, setMadeIn] = useState("");
+  const [price, setPrice] = useState("");
+  const [left, setLeft] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [chooseImage, setChooseImage] = useState<File | "">("");
+  const [total, setTotal] = useState<number | undefined>(undefined);
+  const [solded, setSolded] = useState<any>(undefined);
+  const [imageUrl, setImageUrl] = useState("");
+  const [type, setType] = useState("hoodie");
   const router = useRouter();
+
+  const handleSubmitToDb = async () => {
+    const createdResponse = await axios.post(
+      `http://localhost:3001/products/`,
+      {
+        name: name,
+        type: type,
+        madeIn: madeIn,
+        image: imageUrl ? imageUrl : "/shopping.png",
+        price: price,
+        left: left,
+        total: total,
+        solded: solded,
+        discountPercent: discount,
+        description: description,
+      }
+    );
+    if (createdResponse.status === 200) {
+      return alert("success editing product");
+    } else {
+      console.log("error data in creating new product:", createdResponse.data);
+
+      return alert("error on editing products...");
+    }
+  };
+  const handleCreateNewProduct = async () => {
+    if (chooseImage) {
+      console.log("firebase mode");
+
+      return await uploadFileToFirebase(chooseImage, "products", setImageUrl);
+    }
+    console.log("normal mode ");
+
+    return await handleSubmitToDb();
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value, files } = e.target;
+    switch (id) {
+      case "name":
+        setName(value);
+        break;
+      case "description":
+        setDescription(value);
+        break;
+      case "made-in":
+        setMadeIn(value);
+        break;
+      case "price":
+        setPrice(value);
+        break;
+      case "left":
+        setLeft(value);
+        break;
+      case "discount":
+        setDiscount(parseInt(value));
+        break;
+      case "total":
+        setTotal(parseInt(value));
+        break;
+      case "solded":
+        setSolded(parseInt(value));
+        break;
+      // case "image":
+      //   setChooseImage(files?.[0] as File);
+      //   break;
+      default:
+        break;
+    }
+  };
+  const handleChooseImage = (image: File) => {
+    console.log("when choose new image: ", image);
+
+    setChooseImage(image as File);
+  };
+
+  // const handleChangeType = (selectedType:string)=>{
+  //   setType(selectedType)
+  // }
+
+  //console.log("my product in admin: ", product, "and name is: ", name);
+  useEffect(() => {
+    const updateProduct = async () => {
+      await handleSubmitToDb();
+    };
+    if (imageUrl) {
+      updateProduct();
+    }
+  }, [imageUrl]);
+
   return (
-    <Card>
-      <CardHeader>
-        <div>Edit Product</div>
-        <div>Adjust the details of the product</div>
-      </CardHeader>
-      <CardContent className="grid gap-4">
-        <div className="flex flex-col gap-2">
-          <label
-            className="text-sm shrink-0 font-semibold peer-disabled:cursor-not-allowed"
-            htmlFor="made-in"
-          >
-            MADE IN
-          </label>
-          <Input
-            disabled
-            id="made-in"
-            placeholder="Enter country"
-            value="Japan"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label
-            className="text-sm shrink-0 font-semibold peer-disabled:cursor-not-allowed"
-            htmlFor="price"
-          >
-            PRICE
-          </label>
-          <Input id="price" placeholder="Enter price" value="40000mmk" />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label
-            className="text-sm shrink-0 font-semibold peer-disabled:cursor-not-allowed"
-            htmlFor="left"
-          >
-            LEFT
-          </label>
-          <Input id="left" placeholder="Enter quantity" value="10" />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label
-            className="text-sm shrink-0 font-semibold peer-disabled:cursor-not-allowed"
-            htmlFor="discount"
-          >
-            DISCOUNT
-          </label>
-          <Input id="discount" placeholder="Enter discount" value="0%" />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label
-            className="text-sm shrink-0 font-semibold peer-disabled:cursor-not-allowed"
-            htmlFor="image"
-          >
-            IMAGE
-          </label>
-          <Input id="image" type="file" />
-        </div>
-      </CardContent>
-      <CardFooter className=" gap-7">
-        <Button size="lg">create</Button>
-        <Button size="lg" onClick={() => router.back()}>
-          Back
-        </Button>
-      </CardFooter>
-    </Card>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleCreateNewProduct();
+      }}
+    >
+      <Card>
+        <CardHeader>
+          <div>Edit Product</div>
+          <div>Adjust the details of the product</div>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <div className="flex flex-col gap-2">
+            <label htmlFor="name">NAME</label>
+            <Input
+              required
+              id="name"
+              placeholder="Name"
+              value={name}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="description">DESCRIPTION</label>
+            <textarea
+              id="description"
+              placeholder="Enter description"
+              value={description}
+              onChange={(e: any) => handleInputChange(e)}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="made-in">MADE IN</label>
+            <Input
+              required
+              id="made-in"
+              placeholder="Enter country"
+              value={madeIn}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="price">PRICE</label>
+            <Input
+              required
+              id="price"
+              placeholder="Enter price"
+              type="number"
+              value={price}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="left">LEFT</label>
+            <Input
+              required
+              id="left"
+              type="number"
+              placeholder="Enter quantity"
+              value={left}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="discount">DISCOUNT</label>
+            <Input
+              id="discount"
+              placeholder="Enter discount"
+              type="number"
+              value={discount as number}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="discount">TOTAL</label>
+            <Input
+              required
+              id="total"
+              placeholder="Total amount"
+              type="number"
+              value={total}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="solded">SOLDED</label>
+            <Input
+              required
+              id="solded"
+              placeholder="solded amount"
+              type="number"
+              value={solded}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="product-type">Choose product type</label>
+            <ProductTypeDropdown
+              header={type}
+              options={["hoodie", "dress", "sneaker", "event"]}
+              onSelect={setType}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label htmlFor="image">IMAGE</label>
+            <Image
+              width={200}
+              height={200}
+              className="w-[200px] h-[200px] object-cover rounded-md"
+              alt="image"
+              src={
+                chooseImage ? URL.createObjectURL(chooseImage) : "/shopping.png"
+              }
+            />
+            <Input
+              required
+              id="image"
+              accept="image/*"
+              type="file"
+              onChange={(e) => handleChooseImage(e.target.files?.[0] as File)}
+            />
+          </div>
+        </CardContent>
+        <CardFooter className=" gap-7">
+          <Button size="lg" type="submit">
+            create
+          </Button>
+          <Button size="lg" type="button" onClick={() => router.back()}>
+            Back
+          </Button>
+        </CardFooter>
+      </Card>
+    </form>
   );
 }
-
 // === styles.css ===
 
 // body {
