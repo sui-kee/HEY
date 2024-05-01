@@ -7,6 +7,7 @@ import { conforta, corgetta, poppin } from "@/app/font";
 import { useCarts, useUser } from "@/app/store";
 import { UserContext } from "../warpers/userProvider";
 import { useRouter } from "next/navigation";
+import { totalPriceFormat } from "@/app/libs/globalsFuns";
 
 function ItemDetailDrawer({ data }: { data: any }) {
   const [open, setOpen] = useState(false);
@@ -69,7 +70,9 @@ function ItemDetailDrawer({ data }: { data: any }) {
             </div>
             <div className="flex justify-start gap-2 items-center">
               <label className={` ${poppin.className} uppercase`}>Price:</label>
-              <h2 className={` ${corgetta.className}`}>{data.price}mmk</h2>
+              <h2 className={` ${corgetta.className}`}>
+                {totalPriceFormat(data.price)}mmk
+              </h2>
             </div>
             <div className="flex justify-start gap-2 items-center">
               <label className={` ${poppin.className} uppercase`}>Left:</label>

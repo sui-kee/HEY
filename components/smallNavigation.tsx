@@ -7,7 +7,7 @@ import { useState } from "react";
 export default function SmallNavigation() {
   const [openNav, setOpenNav] = useState(false);
   return (
-    <nav className=" sticky min-h-[80px] capitalize bg-[#04BFBF] top-0 right-0 left-0  z-20 w-full block sm:hidden py-2">
+    <nav className=" sticky min-h-[80px] capitalize bg-[#04BFBF] top-0 right-0 left-0 z-[20] w-full block md:hidden py-2">
       {openNav && (
         <ul className=" w-full absolute bottom-[-190px] bg-white flex flex-col text-2xl justify-center text-white gap-2 items-center p-2">
           <Link

@@ -2,7 +2,7 @@
 import { poppin } from "@/app/font";
 import { itemDiscount } from "@/app/libs/cartFunctions";
 import { generateShortUUID } from "@/app/libs/globalsFuns";
-import { useCarts } from "@/app/store";
+import { useCarts, useUser } from "@/app/store";
 import MyButton from "@/components/MyButton";
 import { UserContext } from "@/components/warpers/userProvider";
 import { User } from "@/types/userTypes";
@@ -43,7 +43,7 @@ export default function Page() {
   console.log("carts////", carts);
 
   const removeCarts = useCarts((state) => state.removeAllItems);
-  const user: any = useContext(UserContext);
+  const user = useUser((state) => state.user);
   console.log("user for customer:", user);
 
   const router = useRouter();
@@ -144,10 +144,10 @@ export default function Page() {
           createNewOrder(
             {
               total: totalPrices,
-              status: "shipped",
+              status: "pending",
               customer: user,
               products: carts,
-              customerId: user.id,
+              customerId: user?.id as any,
               orderCode: generateShortUUID(),
             },
             removeCarts

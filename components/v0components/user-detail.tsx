@@ -18,6 +18,7 @@ To read more about using these font, please visit the Next.js documentation:
 - Pages Directory: https://nextjs.org/docs/pages/building-your-application/optimizing/fonts
 **/
 import { convertDateTime } from "@/app/libs/dateTimeFilter";
+import { totalPriceFormat } from "@/app/libs/globalsFuns";
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import {
   TableHead,
@@ -90,7 +91,9 @@ export async function UserDetail({ user }: { user: User }) {
                 <TableRow key={index}>
                   <TableCell>1234</TableCell>
                   <TableCell>{convertDateTime(order.orderTime)}</TableCell>
-                  <TableCell>${order.total}</TableCell>
+                  <TableCell>
+                    ${order && totalPriceFormat(order.total)}
+                  </TableCell>
                   <TableCell>{order.status}</TableCell>
                 </TableRow>
               ))}

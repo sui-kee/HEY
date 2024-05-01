@@ -44,6 +44,7 @@ import axios from "axios";
 import { convertDateTime } from "@/app/libs/dateTimeFilter";
 import Link from "next/link";
 import { Order } from "@/types/orderTypes";
+import { totalPriceFormat } from "@/app/libs/globalsFuns";
 
 const getOrders = async () => {
   const response = await axios.get("http://localhost:3001/orders");
@@ -128,7 +129,7 @@ export async function OrdersList() {
                     {convertDateTime(order.orderTime)}
                   </TableCell>
                   <TableCell className="hidden  md:table-cell ">
-                    ${order.total}
+                    ${totalPriceFormat(order.total)}
                   </TableCell>
                   <TableCell className="hidden  sm:table-cell">
                     {order.status}

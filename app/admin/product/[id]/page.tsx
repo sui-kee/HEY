@@ -18,6 +18,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { uploadFileToFirebase } from "@/app/libs/uploadToFirebase";
 import { ProductItem } from "@/types/productTypes";
+import AlertBox from "@/components/component/alet-box";
+import { ProductTypeDropdown } from "@/components/component/product-type-dropdown";
 
 const getProduct = async (productId: string) => {
   const response = await axios.get(
@@ -34,6 +36,7 @@ const getProduct = async (productId: string) => {
 
 export default function EditProduct({ params }: { params: { id: string } }) {
   const [product, setProduct] = useState<ProductItem | null>(null);
+  const [deleting, setDeleting] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [madeIn, setMadeIn] = useState("");
@@ -44,16 +47,34 @@ export default function EditProduct({ params }: { params: { id: string } }) {
   const [chooseImage, setChooseImage] = useState<File | undefined>(undefined);
   const [total, setTotal] = useState<number | undefined>(undefined);
   const [solded, setSolded] = useState<any>(undefined);
+  const [type, setType] = useState<"hoody" | "dress" | "sneaker" | "event">(
+    "hoody"
+  );
   const [imageUrl, setImageUrl] = useState("");
+
   const router = useRouter();
   const productId = params.id;
+
+  const deleteProduct = async (productId: string) => {
+    const response = await axios.delete(
+      `http://localhost:3001/products/delete/${productId}`
+    );
+    if (response.status === 200) {
+      alert(" deleting process complete");
+      return router.back();
+    } else {
+      console.log(response.data);
+
+      return alert("error in deleting product");
+    }
+  };
 
   const handleSubmitToDb = async () => {
     const editProduct = await axios.put(
       `http://localhost:3001/products/edit/${productId}`,
       {
         name: name,
-        type: product?.type,
+        type: type,
         madeIn: madeIn,
         image: imageUrl ? imageUrl : product?.image,
         price: price,
@@ -65,7 +86,8 @@ export default function EditProduct({ params }: { params: { id: string } }) {
       }
     );
     if (editProduct.status === 200) {
-      return alert("success editing product");
+      alert("success editing product");
+      return router.back();
     } else {
       return alert("error on editing products...");
     }
@@ -119,6 +141,10 @@ export default function EditProduct({ params }: { params: { id: string } }) {
     console.log("when choose new image: ", image);
 
     setChooseImage(image as File);
+  };
+
+  const handleDeleteProduct = async (id: string) => {
+    await deleteProduct(id);
   };
 
   useEffect(() => {
@@ -233,6 +259,14 @@ export default function EditProduct({ params }: { params: { id: string } }) {
             />
           </div>
           <div className="flex flex-col gap-2">
+            <label htmlFor="product-type">Choose product type</label>
+            <ProductTypeDropdown
+              header={type}
+              options={["hoody", "dress", "sneaker", "event"]}
+              onSelect={setType}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
             <label htmlFor="image">IMAGE</label>
             <Image
               width={200}
@@ -256,6 +290,20 @@ export default function EditProduct({ params }: { params: { id: string } }) {
           <Button size="lg" onClick={() => router.back()}>
             Back
           </Button>
+          <Button
+            size="lg"
+            className=" hover:bg-red-500 "
+            onClick={() => setDeleting(!deleting)}
+          >
+            Delete product
+          </Button>
+          {deleting && (
+            <AlertBox
+              message="Are you sure to delete?"
+              confirmFunction={() => handleDeleteProduct(product.id)}
+              backFunction={() => setDeleting(!deleting)}
+            />
+          )}
         </CardFooter>
       </Card>
     )

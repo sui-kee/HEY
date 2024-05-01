@@ -30,7 +30,9 @@ export default function CreateProduct() {
   const [total, setTotal] = useState<number | undefined>(undefined);
   const [solded, setSolded] = useState<any>(undefined);
   const [imageUrl, setImageUrl] = useState("");
-  const [type, setType] = useState("hoodie");
+  const [type, setType] = useState<"hoody" | "dress" | "sneaker" | "event">(
+    "hoody"
+  );
   const router = useRouter();
 
   const handleSubmitToDb = async () => {
@@ -50,7 +52,8 @@ export default function CreateProduct() {
       }
     );
     if (createdResponse.status === 200) {
-      return alert("success editing product");
+      alert("success creating product");
+      return router.back();
     } else {
       console.log("error data in creating new product:", createdResponse.data);
 
@@ -222,7 +225,7 @@ export default function CreateProduct() {
             <label htmlFor="product-type">Choose product type</label>
             <ProductTypeDropdown
               header={type}
-              options={["hoodie", "dress", "sneaker", "event"]}
+              options={["hoody", "dress", "sneaker", "event"]}
               onSelect={setType}
             />
           </div>

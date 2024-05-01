@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import AppNameBar from "@/components/appNameBar";
+import UserStateManager from "@/components/warpers/userStateManager";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-[#04BFBF]`}>
         <AppNameBar />
+        <UserStateManager />
         <AntdRegistry>{children}</AntdRegistry>
       </body>
     </html>

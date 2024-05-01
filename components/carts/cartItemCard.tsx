@@ -4,8 +4,9 @@ import MyButton from "../MyButton";
 import { poppin } from "@/app/font";
 import { Item, useCarts } from "@/app/store";
 import { itemDiscount } from "@/app/libs/cartFunctions";
+import { ProductItem } from "@/types/productTypes";
 
-export default function CartItemCard({ item }: { item: Item }) {
+export default function CartItemCard({ item }: { item: ProductItem }) {
   const reduceQuantity = useCarts((state) => state.reduceQuantity);
   const increaseQuantity = useCarts((state) => state.increaseQuantity);
   const removeItem = useCarts((state) => state.removeItem);

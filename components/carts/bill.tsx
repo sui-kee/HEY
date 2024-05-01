@@ -1,5 +1,4 @@
 "use client";
-
 import { useCarts } from "@/app/store";
 import MyDrawer from "../drawers/myDrawer";
 import MyButton from "../MyButton";
@@ -7,23 +6,8 @@ import { poppin } from "@/app/font";
 import Link from "next/link";
 import BillItem from "./billItem";
 import { itemDiscount } from "@/app/libs/cartFunctions";
-const totalPriceFormat = (total: number) => {
-  const totalString = JSON.stringify(total).split("").reverse().join("");
-  const initialStringLength = totalString.length / 3; //the initial divided value (it can be int or float for later use)
-  const stringLength = parseInt((totalString.length / 3) as any); //the length for breaking point (the time of comma should be added)
-  let result = []; //list for final result
-  for (let i = 0; i + 1 <= stringLength; i++) {
-    let breakingPoint = (i + 1) * 3;
-    let startingPoint = i * 3;
-    result.push(totalString.slice(startingPoint, breakingPoint));
-    //for the rest (if exist )
-    if (initialStringLength > stringLength && i + 1 === stringLength) {
-      result.push(totalString.slice(breakingPoint));
-    }
-  }
+import { totalPriceFormat } from "@/app/libs/globalsFuns";
 
-  return result.join(",").split("").reverse().join("");
-};
 export default function Bill() {
   const carts = useCarts((state) => state.carts);
   const allPrices = carts.map((cart) => {

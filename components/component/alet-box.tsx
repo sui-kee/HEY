@@ -19,35 +19,48 @@ To read more about using these font, please visit the Next.js documentation:
 - App Directory: https://nextjs.org/docs/app/building-your-application/optimizing/fonts
 - Pages Directory: https://nextjs.org/docs/pages/building-your-application/optimizing/fonts
 **/
-export function AletBox({
+export default function AlertBox({
   header = "Notice",
   children,
   message = "are you sure",
+  backFunction,
+  confirmFunction,
   confirmBtnText = "confirm",
 }: {
   header?: string;
   children?: React.ReactNode;
   message?: string;
+  confirmFunction: () => void;
+  backFunction: () => void;
   confirmBtnText?: string;
 }) {
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center z-[10000] bg-black bg-opacity-50">
       <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 max-w-md w-full">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
             {header}
           </h3>
-          <button className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none">
+          <button
+            onClick={() => backFunction()}
+            className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none"
+          >
             <XIcon className="h-5 w-5" />
           </button>
         </div>
         <p className="text-gray-700 dark:text-gray-400 mb-4">{message}</p>
         {children}
         <div className="flex justify-between">
-          <button className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:bg-gray-500 dark:hover:bg-gray-400 dark:focus:ring-gray-300 dark:focus:ring-offset-gray-900">
+          <button
+            onClick={() => backFunction()}
+            className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:bg-gray-500 dark:hover:bg-gray-400 dark:focus:ring-gray-300 dark:focus:ring-offset-gray-900"
+          >
             Close
           </button>
-          <button className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:bg-gray-500 dark:hover:bg-gray-400 dark:focus:ring-gray-300 dark:focus:ring-offset-gray-900">
+          <button
+            onClick={() => confirmFunction()}
+            className="bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:bg-gray-500 dark:hover:bg-gray-400 dark:focus:ring-gray-300 dark:focus:ring-offset-gray-900"
+          >
             {confirmBtnText}
           </button>
         </div>

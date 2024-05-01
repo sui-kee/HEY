@@ -34,7 +34,7 @@ export function ProductTypeDropdown({
 }: {
   header: string;
   options: string[];
-  onSelect: (type: string) => void;
+  onSelect: (type: any) => void;
 }) {
   return (
     <DropdownMenu>
