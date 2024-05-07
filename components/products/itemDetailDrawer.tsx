@@ -31,7 +31,7 @@ function ItemDetailDrawer({ data }: { data: any }) {
         <MyButton
           className=" absolute bottom-2 right-2 "
           text="Edit"
-          onClick={() => router.push("/admin/product/" + data.id)}
+          onClick={() => router.push("/admin/" + data.id)}
         />
       ) : (
         <MyButton

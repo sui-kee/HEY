@@ -2,9 +2,9 @@
 import { poppin, protest_riot } from "@/app/font";
 import { cool_outfits } from "@/app/libs/cooloutfits";
 import { useIsUp } from "@/app/store";
-import clsx from "clsx";
 import { useInView } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 
 export default function Tour() {
@@ -23,24 +23,29 @@ export default function Tour() {
         Discover fashions
       </h2>
       <article className=" flex justify-center items-center gap-1 flex-warp w-[70vw]">
-        {cool_outfits.slice(7, 10).map((outfit, i) => (
-          <header key={i} className=" flex justify-start gap-2 items-center">
-            <Image
-              src={outfit.source}
-              width={500}
-              height={500}
-              className=" max-h-[500px] rounded-xl "
-              alt="img"
-            />
-          </header>
-        ))}
+        <div className=" flex flex-col sm:flex-row gap-1">
+          {cool_outfits.slice(7, 10).map((outfit, i) => (
+            <header key={i} className=" flex justify-start items-center">
+              <Image
+                src={outfit.source}
+                width={500}
+                height={500}
+                className=" max-w-[100px] sm:max-w-[140px] lg:max-w-[230px] xl:max-w-[300px] sm:max-h-[500px] rounded-xl "
+                alt="img"
+              />
+            </header>
+          ))}
+        </div>
         <footer
           className={` ${protest_riot.className} flex justify-center flex-col text-[50px] text-[#025159] uppercase `}
         >
           <h3>See fancy fashions now</h3>
-          <button className=" bg-[#038C8C] p-2 rounded-md hover:bg-[#04BFBF] text-black text-xl ">
+          <Link
+            href={"/home/fashions"}
+            className=" bg-[#038C8C] text-center p-2 rounded-md hover:bg-[#04BFBF] text-black text-xl "
+          >
             See now
-          </button>
+          </Link>
         </footer>
       </article>
     </section>

@@ -7,10 +7,11 @@ import uneye from "./uneye.svg";
 import { fjalla } from "@/app/font";
 import Link from "next/link";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { auth } from "@/app/firebase-config";
 import axios from "axios";
 import { useUser } from "@/app/store";
+import SpinLoading from "../pending/loading";
 
 const getUser = async (email: string) => {
   const response = await axios.get(
@@ -30,6 +31,9 @@ function Login() {
   const setUser = useUser((state) => state.setUser);
   const [logging, setLogging] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const redirectPath = searchParams.get("redirectTo");
   const lognIn = async (email: string, password: string) => {
     setLogging(true);
     try {
@@ -59,9 +63,10 @@ function Login() {
           Cookies.set("userToken", user.id);
           Cookies.set("firebase-auth", "true");
           setUser(user);
-          return router.refresh();
+          return redirectPath ? router.push(redirectPath) : router.refresh();
         } else {
           Cookies.set("firebase-auth", "false");
+          setLogging(false);
           return alert("user not found please try again");
         }
       });
@@ -151,6 +156,7 @@ function Login() {
           signup
         </Link>
       </h4>
+      {logging ? <SpinLoading loadingText="Logging" /> : null}
     </form>
   );
 }

@@ -16,20 +16,20 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { uploadFileToFirebase } from "@/app/libs/uploadToFirebase";
 import { ProductTypeDropdown } from "@/components/component/product-type-dropdown";
+import { uploadFileToFirebase } from "@/app/libs/uploadToFirebase";
 
 export default function CreateProduct() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [madeIn, setMadeIn] = useState("");
-  const [price, setPrice] = useState("");
-  const [left, setLeft] = useState("");
-  const [discount, setDiscount] = useState(0);
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [madeIn, setMadeIn] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
+  const [left, setLeft] = useState<string>("");
+  const [discount, setDiscount] = useState<number>(0);
   const [chooseImage, setChooseImage] = useState<File | "">("");
-  const [total, setTotal] = useState<number | undefined>(undefined);
-  const [solded, setSolded] = useState<any>(undefined);
-  const [imageUrl, setImageUrl] = useState("");
+  const [total, setTotal] = useState<number>(0);
+  const [solded, setSolded] = useState<number>(0);
+  const [imageUrl, setImageUrl] = useState<string>("");
   const [type, setType] = useState<"hoody" | "dress" | "sneaker" | "event">(
     "hoody"
   );

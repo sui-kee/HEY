@@ -14,69 +14,67 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import Image from "next/image";
-import { uploadFileToFirebase } from "@/app/libs/uploadToFirebase";
-import { ProductItem } from "@/types/productTypes";
-import AlertBox from "@/components/component/alet-box";
+import { useEffect, useState } from "react";
 import { ProductTypeDropdown } from "@/components/component/product-type-dropdown";
+import { v4 as uuidv4 } from "uuid";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "@/app/firebase";
 
-const getProduct = async (productId: string) => {
-  const response = await axios.get(
-    "http://localhost:3001/products/" + productId
+export const uploadFileToFirebase = async (
+  file: any,
+  fileDirectory: any,
+  setUrl: (url: any) => void
+) => {
+  const fileName = `${fileDirectory}/${file.name + uuidv4()}`;
+  const imageRef = ref(storage, fileName);
+  const uploadTask = uploadBytesResumable(imageRef, file);
+  // set up an event listener to track upload progress
+  uploadTask.on(
+    "state_changed",
+    (snapshot) => {
+      var percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log(percent + "% done");
+    },
+    (error) => {
+      console.log(error);
+      console.log(error.message);
+    },
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then((url: string) => {
+        //   toast.success("uploaded successfully!");
+        console.log("work somehow and url:::" + url);
+
+        setUrl(url);
+      });
+    }
   );
-  if (response.status === 201) {
-    return response.data;
-  } else {
-    console.log("error fetching product with id:", response.data);
-
-    return alert("error fetching product:");
-  }
 };
 
-export default function EditProduct({ params }: { params: { id: string } }) {
-  const [product, setProduct] = useState<ProductItem | null>(null);
-  const [deleting, setDeleting] = useState(false);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [madeIn, setMadeIn] = useState("");
-  const [price, setPrice] = useState("");
-  const [left, setLeft] = useState("");
-  const [discount, setDiscount] = useState(0);
-  const [image, setImage] = useState<any>("");
-  const [chooseImage, setChooseImage] = useState<File | undefined>(undefined);
+export default function CreateProduct() {
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [madeIn, setMadeIn] = useState<string>("");
+  const [price, setPrice] = useState<string>("");
+  const [left, setLeft] = useState<string>("");
+  const [discount, setDiscount] = useState<number>(0);
+  const [chooseImage, setChooseImage] = useState<File | "">("");
   const [total, setTotal] = useState<number | undefined>(undefined);
   const [solded, setSolded] = useState<any>(undefined);
+  const [imageUrl, setImageUrl] = useState<string>("");
   const [type, setType] = useState<"hoody" | "dress" | "sneaker" | "event">(
     "hoody"
   );
-  const [imageUrl, setImageUrl] = useState("");
-
   const router = useRouter();
-  const productId = params.id;
-
-  const deleteProduct = async (productId: string) => {
-    const response = await axios.delete(
-      `http://localhost:3001/products/delete/${productId}`
-    );
-    if (response.status === 200) {
-      alert(" deleting process complete");
-      return router.back();
-    } else {
-      console.log(response.data);
-
-      return alert("error in deleting product");
-    }
-  };
 
   const handleSubmitToDb = async () => {
-    const editProduct = await axios.put(
-      `http://localhost:3001/products/edit/${productId}`,
+    const createdResponse = await axios.post(
+      `http://localhost:3001/products/`,
       {
         name: name,
         type: type,
         madeIn: madeIn,
-        image: imageUrl ? imageUrl : product?.image,
+        image: imageUrl ? imageUrl : "/shopping.png",
         price: price,
         left: left,
         total: total,
@@ -85,14 +83,16 @@ export default function EditProduct({ params }: { params: { id: string } }) {
         description: description,
       }
     );
-    if (editProduct.status === 200) {
-      alert("success editing product");
+    if (createdResponse.status === 200) {
+      alert("success creating product");
       return router.back();
     } else {
+      console.log("error data in creating new product:", createdResponse.data);
+
       return alert("error on editing products...");
     }
   };
-  const handleSaveChanges = async () => {
+  const handleCreateNewProduct = async () => {
     if (chooseImage) {
       console.log("firebase mode");
 
@@ -143,27 +143,11 @@ export default function EditProduct({ params }: { params: { id: string } }) {
     setChooseImage(image as File);
   };
 
-  const handleDeleteProduct = async (id: string) => {
-    await deleteProduct(id);
-  };
+  // const handleChangeType = (selectedType:string)=>{
+  //   setType(selectedType)
+  // }
 
-  useEffect(() => {
-    const get_product = async () => {
-      const product = await getProduct(productId);
-      setProduct(product);
-      setName(product.name || "");
-      setDescription(product.description || "");
-      setMadeIn(product.madeIn || "");
-      setPrice(product.price || "");
-      setLeft(product.left || "");
-      setSolded(product.solded || 0);
-      setTotal(product.total || 0);
-      setDiscount(product.discountPercent || 0);
-      setImage(product.image || "");
-    };
-    get_product();
-  }, [productId]);
-  console.log("my product in admin: ", product, "and name is: ", name);
+  //console.log("my product in admin: ", product, "and name is: ", name);
   useEffect(() => {
     const updateProduct = async () => {
       await handleSubmitToDb();
@@ -174,7 +158,12 @@ export default function EditProduct({ params }: { params: { id: string } }) {
   }, [imageUrl]);
 
   return (
-    product && (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleCreateNewProduct();
+      }}
+    >
       <Card>
         <CardHeader>
           <div>Edit Product</div>
@@ -184,6 +173,7 @@ export default function EditProduct({ params }: { params: { id: string } }) {
           <div className="flex flex-col gap-2">
             <label htmlFor="name">NAME</label>
             <Input
+              required
               id="name"
               placeholder="Name"
               value={name}
@@ -202,6 +192,7 @@ export default function EditProduct({ params }: { params: { id: string } }) {
           <div className="flex flex-col gap-2">
             <label htmlFor="made-in">MADE IN</label>
             <Input
+              required
               id="made-in"
               placeholder="Enter country"
               value={madeIn}
@@ -211,6 +202,7 @@ export default function EditProduct({ params }: { params: { id: string } }) {
           <div className="flex flex-col gap-2">
             <label htmlFor="price">PRICE</label>
             <Input
+              required
               id="price"
               placeholder="Enter price"
               type="number"
@@ -221,6 +213,7 @@ export default function EditProduct({ params }: { params: { id: string } }) {
           <div className="flex flex-col gap-2">
             <label htmlFor="left">LEFT</label>
             <Input
+              required
               id="left"
               type="number"
               placeholder="Enter quantity"
@@ -241,18 +234,20 @@ export default function EditProduct({ params }: { params: { id: string } }) {
           <div className="flex flex-col gap-2">
             <label htmlFor="discount">TOTAL</label>
             <Input
+              required
               id="total"
-              placeholder="Enter discount"
+              placeholder="Total amount"
               type="number"
               value={total}
               onChange={handleInputChange}
             />
           </div>
           <div className="flex flex-col gap-2">
-            <label htmlFor="discount">SOLDED</label>
+            <label htmlFor="solded">SOLDED</label>
             <Input
+              required
               id="solded"
-              placeholder="Enter discount"
+              placeholder="solded amount"
               type="number"
               value={solded}
               onChange={handleInputChange}
@@ -273,9 +268,12 @@ export default function EditProduct({ params }: { params: { id: string } }) {
               height={200}
               className="w-[200px] h-[200px] object-cover rounded-md"
               alt="image"
-              src={chooseImage ? URL.createObjectURL(chooseImage) : image}
+              src={
+                chooseImage ? URL.createObjectURL(chooseImage) : "/shopping.png"
+              }
             />
             <Input
+              required
               id="image"
               accept="image/*"
               type="file"
@@ -284,32 +282,17 @@ export default function EditProduct({ params }: { params: { id: string } }) {
           </div>
         </CardContent>
         <CardFooter className=" gap-7">
-          <Button size="lg" onClick={() => handleSaveChanges()}>
-            Save Changes
+          <Button size="lg" type="submit">
+            create
           </Button>
-          <Button size="lg" onClick={() => router.back()}>
+          <Button size="lg" type="button" onClick={() => router.back()}>
             Back
           </Button>
-          <Button
-            size="lg"
-            className=" hover:bg-red-500 "
-            onClick={() => setDeleting(!deleting)}
-          >
-            Delete product
-          </Button>
-          {deleting && (
-            <AlertBox
-              message="Are you sure to delete?"
-              confirmFunction={() => handleDeleteProduct(product.id)}
-              backFunction={() => setDeleting(!deleting)}
-            />
-          )}
         </CardFooter>
       </Card>
-    )
+    </form>
   );
 }
-
 // === styles.css ===
 
 // body {

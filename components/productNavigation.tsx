@@ -6,7 +6,11 @@ import { usePathname } from "next/navigation";
 import NavDropDown from "./navDropdown";
 import Image from "next/image";
 
-export default function ProductNavigation() {
+export default function ProductNavigation({
+  locationLink,
+}: {
+  locationLink: string;
+}) {
   const pathName = usePathname();
   console.log(pathName);
 
@@ -16,7 +20,7 @@ export default function ProductNavigation() {
     >
       <ul className=" w-fit flex justify-start items-center gap-6  ">
         <Link
-          href={"/home/products/dresses"}
+          href={`/${locationLink}/products/dresses`}
           className={clsx(
             " py-3 rounded-t-lg uppercase px-2 flex justify-start items-center gap-1 text-sm md:text-xl",
             {
@@ -34,7 +38,7 @@ export default function ProductNavigation() {
           <h3 className=" hidden lg:block">Dresses</h3>
         </Link>
         <Link
-          href={"/home/products/sneakers"}
+          href={`/${locationLink}/products/sneakers`}
           className={clsx(
             " py-3 rounded-t-lg uppercase px-2 flex justify-start items-center gap-1 text-sm md:text-xl",
             {
@@ -52,14 +56,14 @@ export default function ProductNavigation() {
           <h3 className=" hidden lg:block">Sneakers</h3>
         </Link>
         <Link
-          href={"/home/products"}
+          href={`/${locationLink}/products`}
           className={clsx(
             " py-3 rounded-t-lg uppercase px-2 flex justify-start items-center gap-1 text-sm md:text-xl",
             {
               ["bg-[#038C8C]"]:
-                pathName == "/home/products" ||
-                pathName == "/home/products/discounts" ||
-                pathName == "/home/products/largest_price",
+                pathName == `/${locationLink}/products` ||
+                pathName == `/${locationLink}/products/discounts` ||
+                pathName == `/${locationLink}/products/largest_price`,
             }
           )}
         >
@@ -73,7 +77,7 @@ export default function ProductNavigation() {
           <h3 className=" hidden lg:block">Hoodies</h3>
         </Link>
         <Link
-          href={"/home/products/event_outfits"}
+          href={`/${locationLink}/products/event_outfits`}
           className={clsx(
             " py-3 rounded-t-lg uppercase px-2 flex justify-start items-center gap-1 text-sm md:text-xl",
             {

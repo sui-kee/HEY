@@ -149,7 +149,7 @@ export function adminDashboard() {
             <Card>
               <CardHeader>
                 <CardTitle>Revenue</CardTitle>
-                <CardDescription>Today's income</CardDescription>
+                <CardDescription>{`Today's income`}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex items-start gap-2">

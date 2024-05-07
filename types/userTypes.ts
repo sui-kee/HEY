@@ -6,6 +6,7 @@ export type User = {
     role: string;
     email: string;
     password: string;
+    image:string;
     id: string;
     __v: {
       $numberInt: string;

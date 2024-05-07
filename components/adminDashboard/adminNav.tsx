@@ -85,7 +85,7 @@ export default function V0adminNav() {
                     path.includes("product"),
                 }
               )}
-              href="/admin/product"
+              href="/admin/products"
             >
               <PackageIcon className="h-4 w-4" />
               Products
