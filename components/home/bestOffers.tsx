@@ -1,23 +1,30 @@
-import { NormalItem } from "@/types/itemTypes";
 import ProductCard from "./productCard";
 import ProductHeader from "./productHeader";
 import { Suspense } from "react";
+import { ProductItem } from "@/types/productTypes";
 
 export default async function BestOffers() {
-  const allProducts: NormalItem[] = await fetch(
-    "http://localhost:3001/products/discounts",
-    { next: { revalidate: 20 } }
+  const allProducts: ProductItem[] = await fetch(
+    "http://localhost:3001/products/allProducts"
   )
-    .then((res) => res.json())
+    .then((res) => {
+      return res.json();
+    })
     .catch((error) => console.log(error));
   const d_dress = allProducts
-    ? allProducts.filter((product) => product.type === "dress")
+    ? allProducts.filter(
+        (product) => product.type === "dress" && product.discountPercent > 0
+      )
     : [];
   const d_sneaker = allProducts
-    ? allProducts.filter((product) => product.type === "sneaker")
+    ? allProducts.filter(
+        (product) => product.type === "sneaker" && product.discountPercent > 0
+      )
     : [];
   const d_hoody = allProducts
-    ? allProducts.filter((product) => product.type === "hoody")
+    ? allProducts.filter(
+        (product) => product.type === "hoody" && product.discountPercent > 0
+      )
     : [];
 
   return (
