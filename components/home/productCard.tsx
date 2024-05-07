@@ -64,10 +64,7 @@ export default function ProductCard({
         </h2>
         <h3 className="text-3xl text-white">{data[index].name}</h3>
         <p className={` ${conforta.className} text-sm w-fit sm:text-lg`}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis est
-          magni, eligendi quae ea incidunt atque nisi quis nobis sapiente aut
-          non cumque voluptate consequuntur neque voluptates quos ratione
-          officia.
+          {data[index].description}
         </p>
         <footer className=" flex justify-start items-start p-2 gap-2 flex-col">
           <div
