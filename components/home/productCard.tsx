@@ -49,14 +49,14 @@ export default function ProductCard({
             {index + 1}
           </span>
         </div>
-        {data.map((_, num) => (
+        {/* {data.map((_, num) => (
           <BackgroundFrame
             number={num + 1}
             index={num}
             key={num}
             changeImage={() => handleChangeImage(num)}
           />
-        ))}
+        ))} */}
       </article>
       <article className=" flex flex-col justify-start gap-2  ">
         <h2 className=" text-4xl text-[#038C8C] capitalize">

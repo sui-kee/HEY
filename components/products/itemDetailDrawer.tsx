@@ -5,7 +5,6 @@ import Image from "next/image";
 import MyButton from "../MyButton";
 import { conforta, corgetta, poppin } from "@/app/font";
 import { useCarts, useUser } from "@/app/store";
-import { UserContext } from "../warpers/userProvider";
 import { useRouter } from "next/navigation";
 import { totalPriceFormat } from "@/app/libs/globalsFuns";
 
@@ -31,7 +30,7 @@ function ItemDetailDrawer({ data }: { data: any }) {
         <MyButton
           className=" absolute bottom-2 right-2 "
           text="Edit"
-          onClick={() => router.push("/admin/" + data.id)}
+          onClick={() => router.push("/admin/products/" + data.id)}
         />
       ) : (
         <MyButton

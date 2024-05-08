@@ -148,7 +148,11 @@ export async function OrdersList() {
                             View order
                           </Link>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>Customer details</DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Link href={`/admin/users/${order.customer.email}`}>
+                            Customer details
+                          </Link>
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

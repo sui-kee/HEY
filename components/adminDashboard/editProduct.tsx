@@ -238,6 +238,7 @@ export default function EditProduct({ id }: { id: string }) {
             id="description"
             placeholder="Enter description"
             value={description}
+            className=" outline-none border rounded-md p-2"
             onChange={(e: any) => handleInputChange(e)}
           />
         </div>

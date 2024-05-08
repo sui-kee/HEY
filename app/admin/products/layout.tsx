@@ -26,7 +26,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
             </div>
           </form>
         </div>
-        <Link href={"/admin/create"}>
+        <Link href={"/admin/products/create"}>
           <MyButton className=" text-center text-2xl">create +</MyButton>
         </Link>
       </header>

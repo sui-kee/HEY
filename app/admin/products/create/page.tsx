@@ -131,10 +131,11 @@ export default function CreateProduct() {
         e.preventDefault();
         handleCreateNewProduct();
       }}
+      className=" fixed top-0 left-0 w-full h-full p-2 bg-black z-[1000] overflow-auto"
     >
       <Card>
         <CardHeader>
-          <div>Edit Product</div>
+          <div className=" font-extrabold text-3xl ">Create Product</div>
           <div>Adjust the details of the product</div>
         </CardHeader>
         <CardContent className="grid gap-4">
