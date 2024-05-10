@@ -3,7 +3,7 @@ export type User = {
       $oid: string;
     };
     name: string;
-    role: string;
+    role: "ADMIN"|"BASIC"|"GUEST";
     email: string;
     password: string;
     image:string;

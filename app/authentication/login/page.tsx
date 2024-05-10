@@ -3,7 +3,7 @@ import { Suspense } from "react";
 
 export default function Page() {
   return (
-    <main className=" flex justify-center items-center">
+    <main className=" flex h-[100vh] justify-center items-center">
       <Suspense>
         <Login />
       </Suspense>

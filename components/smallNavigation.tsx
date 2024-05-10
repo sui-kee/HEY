@@ -79,7 +79,7 @@ export default function SmallNavigation() {
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
-            stroke="white"
+            stroke="black"
             className="w-[50px] h-[50px]"
           >
             <path

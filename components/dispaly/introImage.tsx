@@ -4,6 +4,7 @@ import { open_sans, roboto } from "@/app/font";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { ProductItem } from "@/types/productTypes";
+import { User } from "@/types/userTypes";
 
 const getUser = async (id: string) => {
   console.log("usertoken id: ", id);
@@ -43,7 +44,7 @@ const getAllProducts = async () => {
 };
 
 export default async function IntroImage() {
-  const user = await getUser(Cookies.get("userToken") as string);
+  const user: User = await getUser(Cookies.get("userToken") as string);
   const products = await getAllProducts();
 
   return (
@@ -79,14 +80,13 @@ export default async function IntroImage() {
               <h2 className=" text-xl">...More</h2>
             </Link>
           </footer>
-          {user && user.role === "ADMIN" && (
-            <Link
-              href={user.role === "BASIC" ? "/home" : "/admin"}
-              className=" bg-[#025159] text-[#04BFBF] hover:bg-black w-fit h-fit rounded-md p-2 bottom-0 right-[50] left-[50]"
-            >
-              {user.role === "BASIC" ? "Start shopping" : "Admin dashboard"}
-            </Link>
-          )}
+
+          <Link
+            href={"/home"}
+            className=" bg-[#025159] text-[#04BFBF] hover:bg-black w-fit h-fit rounded-md p-2 bottom-0 right-[50] left-[50]"
+          >
+            See best offers
+          </Link>
         </article>
         <Image
           priority

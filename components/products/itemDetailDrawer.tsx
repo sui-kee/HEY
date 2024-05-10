@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Drawer } from "antd";
 import Image from "next/image";
 import MyButton from "../MyButton";
@@ -23,6 +23,13 @@ function ItemDetailDrawer({ data }: { data: any }) {
   const onClose = () => {
     setOpen(false);
   };
+
+  const handleAddToCart = () => {
+    if (user?.role === "GUEST") {
+      return router.push("/authentication");
+    }
+    addItemToCart({ ...data, quantity: 1 });
+  };
   // console.log("user in detail: ", user[0]);
   const the_button = () => {
     return user ? (
@@ -34,7 +41,7 @@ function ItemDetailDrawer({ data }: { data: any }) {
         />
       ) : (
         <MyButton
-          onClick={() => addItemToCart({ ...data, quantity: 1 })}
+          onClick={handleAddToCart}
           className=" absolute bottom-2 right-2 "
           text="add to cart"
         />

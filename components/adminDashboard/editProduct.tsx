@@ -219,7 +219,7 @@ export default function EditProduct({ id }: { id: string }) {
   return product ? (
     <Card>
       <CardHeader>
-        <div>Edit Product</div>
+        <div className=" font-extrabold text-3xl ">Edit Product</div>
         <div>Adjust the details of the product</div>
       </CardHeader>
       <CardContent className="grid gap-4">
@@ -326,7 +326,7 @@ export default function EditProduct({ id }: { id: string }) {
           />
         </div>
       </CardContent>
-      <CardFooter className=" gap-7">
+      <CardFooter className=" flex gap-7 flex-wrap ">
         <Button
           size="lg"
           onClick={() => {

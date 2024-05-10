@@ -1,7 +1,7 @@
-import ProductCard from "./productCard";
 import ProductHeader from "./productHeader";
 import { Suspense } from "react";
 import { ProductItem } from "@/types/productTypes";
+import { ProductCarousels } from "../component/image-carousel";
 
 export default async function BestOffers() {
   const allProducts: ProductItem[] = await fetch(
@@ -30,9 +30,9 @@ export default async function BestOffers() {
   return (
     <ProductHeader>
       <Suspense fallback={<div>.....</div>}>
-        <ProductCard data={d_dress} link={"dresses"} type="dress" />
-        <ProductCard data={d_sneaker} link={""} type="hoody" />
-        <ProductCard data={d_hoody} link={"sneakers"} type="sneaker" />
+        <ProductCarousels discountProducts={d_hoody} linkTo="" />
+        <ProductCarousels discountProducts={d_sneaker} linkTo={"sneakers"} />
+        <ProductCarousels discountProducts={d_dress} linkTo={"dresses"} />
       </Suspense>
     </ProductHeader>
   );

@@ -30,11 +30,14 @@ export default function AppNameBar() {
     "https://firebasestorage.googleapis.com/v0/b/heyshop-9658b.appspot.com/o/hat.png?alt=media&token=da385753-74c2-4b06-8e86-1758009346a4";
   return (
     <div className="fixed cursor-pointer z-30 top-2 left-2 flex justify-start items-center gap-2">
-      <Link href={"/"} className=" uppercase text-4xl text-white font-bold">
+      <Link
+        href={"/"}
+        className=" uppercase drop-shadow-lg text-4xl text-white font-bold"
+      >
         HEY
       </Link>
       {user ? (
-        <div className=" flex gap-1 items-center bg-white rounded-full p-1 pr-2">
+        <div className=" flex gap-1 items-center bg-white rounded-full border p-1 pr-2">
           <Image
             src={user.image ? user.image : profileSrcDefault}
             alt="profile"

@@ -61,6 +61,22 @@ export default function Page() {
   const onMonthChange: DatePickerProps["onChange"] = (date, dateString) => {
     console.log(date, dateString);
   };
+  const handleCreateOrder = () => {
+    if (carts.length === 0) {
+      return alert("no product is added...");
+    }
+    createNewOrder(
+      {
+        total: totalPrices,
+        status: "pending",
+        customer: user,
+        products: carts,
+        customerId: user?.id as any,
+        orderCode: generateShortUUID(),
+      },
+      removeCarts
+    );
+  };
   // console.log(
   //   {
   //     total: totalPrices,
@@ -140,19 +156,7 @@ export default function Page() {
         </footer>
       </div>
       <button
-        onClick={() =>
-          createNewOrder(
-            {
-              total: totalPrices,
-              status: "pending",
-              customer: user,
-              products: carts,
-              customerId: user?.id as any,
-              orderCode: generateShortUUID(),
-            },
-            removeCarts
-          )
-        }
+        onClick={handleCreateOrder}
         className=" hover:text-black text-xl font-extrabold space-x-3 uppercase text-white"
       >
         Pay in other way? just order first

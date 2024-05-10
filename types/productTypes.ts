@@ -1,7 +1,7 @@
 export type ProductItem= {
     _id?:any,
     name:string,
-    type:string,
+    type:"hoody"|"sneaker"|"dress"|"event_outfit",
     madeIn:string,
     image:string,
     price:number,

@@ -8,7 +8,7 @@ export default function Denied() {
         Access denied
       </h4>
       <Link href={"/"} className=" bg-black text-white rounded-md p-3 px-5">
-        Back
+        Home
       </Link>
     </main>
   );
