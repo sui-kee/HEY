@@ -5,7 +5,7 @@ import Image from "next/image";
 import MyButton from "../MyButton";
 import { conforta, corgetta, poppin } from "@/app/font";
 import { useCarts, useUser } from "@/app/store";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { totalPriceFormat } from "@/app/libs/globalsFuns";
 
 function ItemDetailDrawer({ data }: { data: any }) {
@@ -14,6 +14,7 @@ function ItemDetailDrawer({ data }: { data: any }) {
   const addItemToCart = useCarts((state) => state.addItem);
   const allCarts = useCarts((state) => state.carts);
   const router = useRouter();
+  const currentPath = usePathname();
   const showDrawer = () => {
     setOpen(true);
   };
@@ -26,7 +27,7 @@ function ItemDetailDrawer({ data }: { data: any }) {
 
   const handleAddToCart = () => {
     if (user?.role === "GUEST") {
-      return router.push("/authentication");
+      return router.push(`/authentication?redirectTo=${currentPath}`);
     }
     addItemToCart({ ...data, quantity: 1 });
   };

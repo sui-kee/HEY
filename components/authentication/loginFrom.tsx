@@ -12,6 +12,7 @@ import { auth } from "@/app/firebase-config";
 import axios from "axios";
 import { useUser } from "@/app/store";
 import SpinLoading from "../pending/loading";
+import { User } from "@/types/userTypes";
 
 const getUser = async (email: string) => {
   const response = await axios.get(
@@ -29,12 +30,13 @@ function Login() {
   const [password, setPassword] = useState("");
   const [seePassword, setSeePassword] = useState(false);
   const setUser = useUser((state) => state.setUser);
-  const user = useUser((state) => state.user);
+  const [myUser, setMyUser] = useState<User | null>(null);
   const [logging, setLogging] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const redirectPath = searchParams.get("redirectTo");
+  const mustRefresh = searchParams.get("refresh");
   const lognIn = async (email: string, password: string) => {
     setLogging(true);
     try {
@@ -64,9 +66,10 @@ function Login() {
         Cookies.set("userToken", user.id);
         Cookies.set("firebase-auth", "true");
         setUser(user);
-        console.log("redirect work?...");
+        setMyUser(user);
+        return console.log("redirect work?...");
 
-        return redirectPath ? router.push(redirectPath) : router.refresh();
+        // return redirectPath ? router.push(redirectPath) : router.refresh();
       } else {
         Cookies.set("firebase-auth", "false");
         setLogging(false);
@@ -76,12 +79,18 @@ function Login() {
       return alert(error.message);
     }
   };
-  // useEffect(() => {
-  //   if (user && user?.role !== "GUEST") {
-  //     return redirectPath ? router.push(redirectPath) : router.refresh();
-  //   }
-  // }, [user]);
-  console.log("user from login state user: ", user);
+  useEffect(() => {
+    if (myUser && myUser?.role !== "GUEST") {
+      //alert(`it shoould work tho ${redirectPath}`);
+      if (!mustRefresh) {
+        ///if the authentication part has no refresh path or redirect path
+        return router.push("/home");
+      }
+
+      return redirectPath ? router.push(redirectPath) : router.refresh();
+    }
+  }, [myUser]);
+  console.log("user from login state user: ", myUser);
 
   return (
     <form
