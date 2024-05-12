@@ -82,7 +82,7 @@ function Login() {
   useEffect(() => {
     if (myUser && myUser?.role !== "GUEST") {
       //alert(`it shoould work tho ${redirectPath}`);
-      if (!mustRefresh) {
+      if (!redirectPath && !mustRefresh) {
         ///if the authentication part has no refresh path or redirect path
         return router.push("/home");
       }
