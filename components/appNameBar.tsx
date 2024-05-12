@@ -3,26 +3,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { useUser } from "@/app/store";
 
-const getUser = async (id: string) => {
-  console.log("usertoken id: ", id);
+// const getUser = async (id: string) => {
+//   console.log("usertoken id: ", id);
 
-  try {
-    const response = await fetch(
-      `http://localhost:3001/users/getUserById?id=` + id
-    );
+//   try {
+//     const response = await fetch(
+//       `http://localhost:3001/users/getUserById?id=` + id
+//     );
 
-    if (!response.ok) {
-      throw new Error("Error fetching user");
-    }
-    const data = await response.json();
-    console.log("get user from middleware getuser data: ", data);
+//     if (!response.ok) {
+//       throw new Error("Error fetching user");
+//     }
+//     const data = await response.json();
+//     console.log("get user from middleware getuser data: ", data);
 
-    return data;
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    return null;
-  }
-};
+//     return data;
+//   } catch (error) {
+//     console.error("Error fetching user:", error);
+//     return null;
+//   }
+// };
 
 export default function AppNameBar() {
   const user = useUser((state) => state.user);

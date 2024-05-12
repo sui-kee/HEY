@@ -6,9 +6,11 @@ import { UserContext } from "../warpers/userProvider";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import SpinLoading from "../pending/loading";
+import AlertBox from "../component/alet-box";
 
 export default function DeleteOrder({ orderId }: { orderId: string }) {
   const [deleting, setDeleting] = useState(false);
+  const [tryToDelete, setTryToDelete] = useState(false);
   const user: any = useContext(UserContext);
   const router = useRouter();
   const onDelete = async (id: string) => {
@@ -25,17 +27,21 @@ export default function DeleteOrder({ orderId }: { orderId: string }) {
       return alert("error in deleting order....");
     }
   };
+  const confirmDeleting = () => {
+    setDeleting(!deleting);
+    onDelete(orderId);
+  };
   return (
     <>
-      <Button
-        onClick={() => {
-          setDeleting(!deleting);
-          onDelete(orderId);
-        }}
-      >
-        delete order
-      </Button>
+      <Button onClick={() => setTryToDelete(!tryToDelete)}>delete order</Button>
       {deleting ? <SpinLoading loadingText="deleting" /> : null}
+      {tryToDelete ? (
+        <AlertBox
+          message="Are you sure to delete this order"
+          confirmFunction={() => onDelete(orderId)}
+          backFunction={() => setTryToDelete(!tryToDelete)}
+        />
+      ) : null}
     </>
   );
 }

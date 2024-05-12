@@ -30,8 +30,7 @@ import {
 } from "@/components/ui/card";
 import { Order } from "@/types/orderTypes";
 import Link from "next/link";
-import { Button } from "../ui/button";
-import DeleteOrder from "./orderFuns";
+import DeleteOrder from "../v0components/orderFuns";
 import { useEffect, useState } from "react";
 import OrderDetailSkeleton from "../skeletons/orderDetailSkeleton";
 import { totalPriceFormat } from "@/app/libs/globalsFuns";
@@ -82,7 +81,7 @@ export function OrderDetail({ orderId }: { orderId: string }) {
             <div>Tracking number: 1234567890</div>
           </div>
         </CardContent>
-        <CardFooter className="flex justify-between">
+        {/* <CardFooter className="flex justify-between">
           <Button
             className="dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
             variant="outline"
@@ -92,7 +91,7 @@ export function OrderDetail({ orderId }: { orderId: string }) {
           <Button className="dark:bg-blue-500 dark:text-gray-100 dark:hover:bg-blue-600">
             finished
           </Button>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
       <Card>
         <CardHeader>
@@ -122,7 +121,7 @@ export function OrderDetail({ orderId }: { orderId: string }) {
           <CardTitle>Total amount</CardTitle>
         </CardHeader>
         <CardContent className="text-sm">
-          <div>{totalPriceFormat(formattedTotalPrice)}</div>
+          <div>{totalPriceFormat(formattedTotalPrice)}mmk</div>
         </CardContent>
       </Card>
       <Card>

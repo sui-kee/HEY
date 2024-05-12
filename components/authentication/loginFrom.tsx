@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import eye from "./eye.svg";
 import Cookies from "js-cookie";
 import uneye from "./uneye.svg";
@@ -29,6 +29,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [seePassword, setSeePassword] = useState(false);
   const setUser = useUser((state) => state.setUser);
+  const user = useUser((state) => state.user);
   const [logging, setLogging] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -55,25 +56,33 @@ function Login() {
 
   const onSubmit = async () => {
     try {
-      await lognIn(email, password).then(async () => {
-        const user = await getUser(email);
-        console.log("user from login:", user);
+      await lognIn(email, password);
+      const user = await getUser(email);
+      console.log("user from login:", user);
 
-        if (user) {
-          Cookies.set("userToken", user.id);
-          Cookies.set("firebase-auth", "true");
-          setUser(user);
-          return redirectPath ? router.push(redirectPath) : router.refresh();
-        } else {
-          Cookies.set("firebase-auth", "false");
-          setLogging(false);
-          return alert("user not found please try again");
-        }
-      });
+      if (user) {
+        Cookies.set("userToken", user.id);
+        Cookies.set("firebase-auth", "true");
+        setUser(user);
+        console.log("redirect work?...");
+
+        return redirectPath ? router.push(redirectPath) : router.refresh();
+      } else {
+        Cookies.set("firebase-auth", "false");
+        setLogging(false);
+        return alert("user not found please try again");
+      }
     } catch (error: any) {
       return alert(error.message);
     }
   };
+  // useEffect(() => {
+  //   if (user && user?.role !== "GUEST") {
+  //     return redirectPath ? router.push(redirectPath) : router.refresh();
+  //   }
+  // }, [user]);
+  console.log("user from login state user: ", user);
+
   return (
     <form
       onSubmit={(e) => {

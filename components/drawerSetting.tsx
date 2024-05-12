@@ -8,10 +8,13 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { useUser } from "@/app/store";
+import Link from "next/link";
+import { guest } from "@/lib/defaultUser";
 
 const SettingDrawer: React.FC = () => {
   const [open, setOpen] = useState(false);
   const user = useUser((state) => state.user);
+  const setUser = useUser((state) => state.setUser);
   const [isLogin, setIsLogin] = useState(false);
   const router = useRouter();
   // const { firebase_auth } = getCookies();
@@ -37,6 +40,7 @@ const SettingDrawer: React.FC = () => {
       .then(() => {
         Cookies.remove("userToken");
         Cookies.remove("firebase-auth");
+        setUser(guest);
         return router.push("/");
       })
       .catch((error: any) => {
@@ -68,7 +72,7 @@ const SettingDrawer: React.FC = () => {
         open={open}
         className=" justify-start items-center w-full gap-3 flex-col "
       >
-        {user?.role !== "GUEST" && (
+        {user?.role !== "GUEST" ? (
           <button
             onClick={handleLogout}
             className="  flex justify-center items-center gap-2 text-xl font-bold uppercase"
@@ -89,6 +93,15 @@ const SettingDrawer: React.FC = () => {
             </svg>
             <h3>Logout</h3>
           </button>
+        ) : (
+          <Button className=" w-full">
+            <Link
+              href={"/authentication"}
+              className=" text-white w-full h-full"
+            >
+              Login
+            </Link>
+          </Button>
         )}
         <button className="  flex justify-center items-center gap-2 text-xl font-bold uppercase">
           <svg
@@ -107,6 +120,29 @@ const SettingDrawer: React.FC = () => {
           </svg>
           <h3>Message</h3>
         </button>
+        {user?.role !== "GUEST" ? (
+          <Link
+            href={"/home/orders"}
+            onClick={() => setOpen(!open)}
+            className=" w-full flex justify-center items-center gap-2 text-xl font-bold uppercase"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-[66px] h-[66px] p-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z"
+              />
+            </svg>
+            <h3>Orders</h3>
+          </Link>
+        ) : null}
         {user?.role === "ADMIN" ? (
           <Button className=" w-full" onClick={handleLoginAsAdmin}>
             Admin
