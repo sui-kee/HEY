@@ -20,7 +20,7 @@ To read more about using these font, please visit the Next.js documentation:
 **/
 const getOrderByUserId = async (id: string) => {
   const response = await axios.get(
-    `https://54.167.15.95:3001/orders/byUserId/${id}`
+    `http://54.167.15.95:3001/orders/byUserId/${id}`
   );
   if (response.status === 201) {
     return response.data;

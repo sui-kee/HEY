@@ -16,7 +16,7 @@ import { User } from "@/types/userTypes";
 
 const getUser = async (email: string) => {
   const response = await axios.get(
-    `https://54.167.15.95:3001/users/email/${email}`
+    `http://54.167.15.95:3001/users/email/${email}`
   );
   if (response.status === 201) {
     return response.data;

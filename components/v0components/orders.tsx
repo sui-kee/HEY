@@ -47,7 +47,7 @@ import { Order } from "@/types/orderTypes";
 import { totalPriceFormat } from "@/app/libs/globalsFuns";
 
 const getOrders = async () => {
-  const response = await axios.get("https://54.167.15.95:3001/orders");
+  const response = await axios.get("http://54.167.15.95:3001/orders");
   if (response.status === 201) {
     return response.data;
   } else {

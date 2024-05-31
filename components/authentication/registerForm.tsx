@@ -26,7 +26,7 @@ function Register() {
     email: string,
     role: "ADMIN" | "BASIC"
   ) => {
-    const response = await axios.post("https://54.167.15.95:3001/user/create", {
+    const response = await axios.post("http://54.167.15.95:3001/user/create", {
       name: name,
       email: email,
       password: password,

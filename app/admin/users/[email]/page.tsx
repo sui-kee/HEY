@@ -1,9 +1,7 @@
 import { UserDetail } from "@/components/v0components/user-detail";
 
 const getUser = async (email: string) => {
-  const response = await fetch(
-    `https://54.167.15.95:3001/users/email/${email}`
-  );
+  const response = await fetch(`http://54.167.15.95:3001/users/email/${email}`);
 
   if (response.ok) {
     //console.log("log from response: ", await response.json());

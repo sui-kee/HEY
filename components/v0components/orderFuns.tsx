@@ -15,7 +15,7 @@ export default function DeleteOrder({ orderId }: { orderId: string }) {
   const router = useRouter();
   const onDelete = async (id: string) => {
     const response = await axios.delete(
-      `https://54.167.15.95:3001/orders/delete/${id}`
+      `http://54.167.15.95:3001/orders/delete/${id}`
     );
     if (response.status === 201) {
       alert(" deleting order success....");

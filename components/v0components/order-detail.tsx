@@ -40,7 +40,7 @@ export function OrderDetail({ orderId }: { orderId: string }) {
   const [order, setOrder] = useState<Order | null>(null);
   const [formattedTotalPrice, setFromattedTotalPrice] = useState<number>(0);
   const getOrderById = async (id: string) => {
-    const response = await fetch(`https://54.167.15.95:3001/orders/${id}`);
+    const response = await fetch(`http://54.167.15.95:3001/orders/${id}`);
     if (response.ok) {
       // console.log("response is :", response.json());
 

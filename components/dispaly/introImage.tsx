@@ -11,7 +11,7 @@ const getUser = async (id: string) => {
 
   try {
     const response = await fetch(
-      `https://54.167.15.95:3001/users/getUserById?id=` + id
+      `http://54.167.15.95:3001/users/getUserById?id=` + id
     );
 
     if (!response.ok) {
@@ -30,7 +30,7 @@ const getUser = async (id: string) => {
 const getAllProducts = async () => {
   try {
     const response = await fetch(
-      `https://54.167.15.95:3001/products/allProducts`
+      `http://54.167.15.95:3001/products/allProducts`
     );
 
     if (!response.ok) {
