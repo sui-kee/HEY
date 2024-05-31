@@ -4,7 +4,9 @@ import ItemCard from "../products/itemCard";
 import Link from "next/link";
 
 const getAllProducts = async () => {
-  const response = await fetch(`http://localhost:3001/products/allProducts`);
+  const response = await fetch(
+    `https://54.167.15.95:3001/products/allProducts`
+  );
   if (response.status === 201) {
     return response.json();
   } else {

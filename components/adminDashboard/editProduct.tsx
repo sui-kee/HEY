@@ -79,7 +79,7 @@ export default function EditProduct({ id }: { id: string }) {
 
   const getProduct = async (productId: string) => {
     const response = await axios.get(
-      "http://localhost:3001/products/" + productId
+      "https://54.167.15.95:3001/products/" + productId
     );
     if (response.status === 201) {
       return response.data;
@@ -92,7 +92,7 @@ export default function EditProduct({ id }: { id: string }) {
 
   const deleteProduct = async (productId: string) => {
     const response = await axios.delete(
-      `http://localhost:3001/products/delete/${productId}`
+      `https://54.167.15.95:3001/products/delete/${productId}`
     );
     if (response.status === 200) {
       setSuccess(!success);
@@ -106,7 +106,7 @@ export default function EditProduct({ id }: { id: string }) {
 
   const handleSubmitToDb = async () => {
     const editProduct = await axios.put(
-      `http://localhost:3001/products/edit/${productId}`,
+      `https://54.167.15.95:3001/products/edit/${productId}`,
       {
         name: name,
         type: type,

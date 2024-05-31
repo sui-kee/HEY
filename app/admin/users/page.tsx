@@ -15,7 +15,7 @@ import UserBox from "@/components/adminDashboard/userBox";
 import { User } from "@/types/userTypes";
 
 const getAllUsers = async () => {
-  const response = await fetch("http://localhost:3001/users");
+  const response = await fetch("https://54.167.15.95:3001/users");
   if (response.ok) {
     return await response.json();
   } else {

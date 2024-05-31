@@ -3,14 +3,15 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Getting Started
 
 - First clone this -https://github.com/sui-kee/hey_api- repo.
-- And clone this HEY repo in your manchine. 
+- And clone this HEY repo in your manchine.
 - run hey_api for api by using (node server.js or npm start) command ( mongo db may not connect due to location restriction :) )
 - run hey project by using ( npm run dev or npm run preview).
 - do not forget to install packages( npm i )
+
 ```bash
 
 
-Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
+Open [https://54.167.15.95:3001](https://54.167.15.95:3001) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
@@ -30,3 +31,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
