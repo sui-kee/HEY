@@ -4,7 +4,7 @@ import { NormalItem } from "@/types/itemTypes";
 
 export default async function Page() {
   const allDress = await fetch(
-    `http://54.167.15.95:3001/products?type=dress&sortBy=discountPercent`
+    `http://localhost:3001/products?type=dress&sortBy=discountPercent`
   )
     .then((res) => res.json())
     .catch((error) => console.log(error.message));

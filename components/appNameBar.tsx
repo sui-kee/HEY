@@ -8,7 +8,7 @@ import { useUser } from "@/app/store";
 
 //   try {
 //     const response = await fetch(
-//       `http://54.167.15.95:3001/users/getUserById?id=` + id
+//       `http://localhost:3001/users/getUserById?id=` + id
 //     );
 
 //     if (!response.ok) {

@@ -5,7 +5,7 @@ import { ProductCarousels } from "../component/image-carousel";
 
 export default async function BestOffers() {
   const allProducts: ProductItem[] = await fetch(
-    "http://54.167.15.95:3001/products/allProducts"
+    "http://localhost:3001/products/allProducts"
   )
     .then((res) => {
       return res.json();

@@ -23,7 +23,7 @@ const createNewOrder = async (
   clearCartFun: () => void
 ) => {
   const response = await axios.post(
-    "http://54.167.15.95:3001/orders/newOrder",
+    "http://localhost:3001/orders/newOrder",
     newOrder
   );
   if (response.status === 201) {

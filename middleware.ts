@@ -4,7 +4,7 @@ import { User } from './types/userTypes';
 
 const getUser = async (id: string) => {
   try {
-    const response = await fetch(`http://54.167.15.95:3001/users/getUserById?id=`+id);
+    const response = await fetch(`http://localhost:3001/users/getUserById?id=`+id);
 
     if (!response.ok) {
       throw new Error('Error fetching user');

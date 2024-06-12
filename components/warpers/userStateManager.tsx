@@ -9,7 +9,7 @@ import { guest } from "@/lib/defaultUser";
 
 const getUser = async (id: string) => {
   const response = await axios.get(
-    `http://54.167.15.95:3001/users/getUserById?id=${id}`
+    `http://localhost:3001/users/getUserById?id=${id}`
   );
   if (response.status === 201) {
     return response.data;

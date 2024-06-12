@@ -69,7 +69,7 @@ export default function CreateProduct() {
 
   const handleSubmitToDb = async () => {
     const createdResponse = await axios.post(
-      `http://54.167.15.95:3001/products/`,
+      `http://localhost:3001/products/`,
       {
         name: name,
         type: type,

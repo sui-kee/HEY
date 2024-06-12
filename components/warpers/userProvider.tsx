@@ -8,7 +8,7 @@ const getUser = async (userToken: string) => {
   console.log("user token:", userToken);
 
   const user = await axios.get(
-    `http://54.167.15.95:3001/users/getUserById?id=${userToken}`
+    `http://localhost:3001/users/getUserById?id=${userToken}`
   );
   if (user.status === 201) {
     return user.data;
